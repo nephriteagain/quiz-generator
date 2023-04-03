@@ -7,7 +7,11 @@ const router = Router()
 router.get('/', async (req, res) => {
     try {
         const allQuizzes = await Quiz.find()
-        res.send(allQuizzes)
+        const dataToSend = allQuizzes.map((item) => {
+          const {_id, title, createdBy} = item
+          return {_id, title, createdBy}
+        })
+        res.send(dataToSend)
     } catch (error) {
         res.send(error)
     }

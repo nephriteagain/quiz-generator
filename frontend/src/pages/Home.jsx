@@ -1,12 +1,13 @@
-import QuizList from "../components/QuizList"
-import NewQuiz from "../components/NewQuiz"
 
-function Home() {
+import QuizList from "../components/index/QuizList"
+import CreateQuiz from "../components/index/CreateQuiz"
+
+function Home({quizList, setQuizList}) {
   return (
       <>
       <header>Quizz Generator</header>
-      <NewQuiz />
-      <QuizList />
+      <CreateQuiz />
+      <QuizList quizList={quizList} setQuizList={setQuizList}/>
       </>
   )
 }

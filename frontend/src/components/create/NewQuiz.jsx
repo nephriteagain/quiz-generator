@@ -1,8 +1,7 @@
 import {useState, useEffect} from 'react'
 import axios from 'axios'
 
-function NewQuiz() {
-  const [formData, setFormData] = useState({})
+function NewQuiz({formData, setFormData}) {
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -64,6 +63,7 @@ function NewQuiz() {
         <h3>Create a New Quiz</h3>
         <div>
           <label htmlFor='title'>Title</label>
+          <br/>
           <input 
             type="text" 
             name='title' 
@@ -72,6 +72,7 @@ function NewQuiz() {
         </div>
         <div>
           <label htmlFor='author'>Author</label>
+          <br/>
           <input 
             type="text" 
             name='author'  
@@ -81,6 +82,7 @@ function NewQuiz() {
         <div>
           <h2>Add a Question</h2>
           <label htmlFor='question'>Question</label>
+          <br/>
           <input 
             type="text" 
             name='question' 
