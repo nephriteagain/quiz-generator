@@ -12,7 +12,7 @@ function Create() {
     <div>
       <NewQuiz formData={formData} setFormData={setFormData}/>
       <QuestionList formData={formData}/>
-      <Link to="/">Try It!</Link>
+      <Link to="/">Back to Home!</Link>
     </div>
   )
 }

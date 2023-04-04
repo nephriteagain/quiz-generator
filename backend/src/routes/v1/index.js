@@ -46,4 +46,32 @@ router.post('/', async (req, res) => {
     
 })
 
+// fix this
+router.post('/quiz/:id', async (req, res) => {
+  const id = req.params.id
+  const answeredQuestions = req.body.questions
+
+  if (mongoose.Types.ObjectId.isValid(id)) {
+    try {
+      const quiz = await Quiz.findOne({_id: id})
+      const quizQuestions = quiz.questions
+      let checkedQuizQuestion = [...quizQuestions]
+      checkedQuizQuestion = checkedQuizQuestion.map((item, index) => {
+        if (item.correctAnswer === answeredQuestions[index].correctAnswer) {
+          return {...item, userCorrect: true}
+        } else {
+          return {...item, userCorrect: false}
+        }
+      })
+      // console.log(quizQuestions)
+      
+      res.send(checkedQuizQuestion)
+    } catch (error) {
+        res.send({message: 'error'})
+    }
+} else {
+    res.send({message: 'Invalid ID'})
+}
+})
+
 module.exports = router
