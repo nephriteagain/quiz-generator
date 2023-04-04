@@ -54,17 +54,17 @@ router.post('/quiz/:id', async (req, res) => {
   if (mongoose.Types.ObjectId.isValid(id)) {
     try {
       const quiz = await Quiz.findOne({_id: id})
-      const quizQuestions = quiz.questions
-      let checkedQuizQuestion = [...quizQuestions]
-      checkedQuizQuestion = checkedQuizQuestion.map((item, index) => {
+      const quizQuestions = [...quiz.questions]
+      let checkedQuizQuestion = []
+      quizQuestions.forEach((item, index) => {
         if (item.correctAnswer === answeredQuestions[index].correctAnswer) {
-          return {...item, userCorrect: true}
+          checkedQuizQuestion.push({...answeredQuestions[index], userCorrect: true})
         } else {
-          return {...item, userCorrect: false}
+         checkedQuizQuestion.push({...answeredQuestions[index], userCorrect: false, correctAnswer: item.correctAnswer})
         }
       })
-      // console.log(quizQuestions)
-      
+  
+
       res.send(checkedQuizQuestion)
     } catch (error) {
         res.send({message: 'error'})
