@@ -10,9 +10,15 @@ function Create() {
 
   return (
     <div>
-      <NewQuiz formData={formData} setFormData={setFormData}/>
-      <QuestionList formData={formData}/>
-      <Link to="/">Back to Home!</Link>
+      <div className='container flex flex-row'>
+        <NewQuiz formData={formData} setFormData={setFormData}/>
+        <QuestionList formData={formData}/>
+      </div>      
+      <Link to="/"
+        className='text-xl bg-yellow-100 px-2 py-1 border-black border-2 rounded-lg shadow-lg'
+      >
+        Back to Home!
+      </Link>
     </div>
   )
 }

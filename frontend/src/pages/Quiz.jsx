@@ -17,7 +17,7 @@ function Quiz({quizList}) {
     axios.get(`http://localhost:3000/api/v1/quiz/${captureString}`)
       .then(response => {
         let data = response.data
-        console.log(data, 'data')
+
         let questions = data.questions
         questions = questions.map((item) => {
           const {questionText, options, _id} = item
@@ -34,7 +34,11 @@ function Quiz({quizList}) {
   return (
     <>
     <Answer data={data} setData={setData}/>
-    <Link to="/">Back To Home</Link>
+    <Link to="/"
+      className='text-xl bg-yellow-100 px-2 py-1 border-black border-2 rounded-lg shadow-lg'
+    >
+      Back To Home
+    </Link>
     </>
   )
 }

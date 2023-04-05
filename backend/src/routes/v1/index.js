@@ -55,12 +55,28 @@ router.post('/quiz/:id', async (req, res) => {
     try {
       const quiz = await Quiz.findOne({_id: id})
       const quizQuestions = [...quiz.questions]
+      console.log(quizQuestions)
       let checkedQuizQuestion = []
       quizQuestions.forEach((item, index) => {
         if (item.correctAnswer === answeredQuestions[index].correctAnswer) {
-          checkedQuizQuestion.push({...answeredQuestions[index], userCorrect: true})
+          checkedQuizQuestion.push(
+            {
+              ...answeredQuestions[index],
+              userAnswer: answeredQuestions[index].correctAnswer,
+              userCorrect: true, 
+              options: item.options
+            }
+          )
         } else {
-         checkedQuizQuestion.push({...answeredQuestions[index], userCorrect: false, correctAnswer: item.correctAnswer})
+         checkedQuizQuestion.push(
+            {
+              ...answeredQuestions[index],
+              userAnswer: answeredQuestions[index].correctAnswer,
+              userCorrect: false,            
+              correctAnswer: item.correctAnswer, 
+              options: item.options,
+            } 
+          )
         }
       })
   
