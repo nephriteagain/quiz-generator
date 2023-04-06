@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react'
+import {AiOutlineMinusCircle} from 'react-icons/ai'
 import axios from 'axios'
 
 function NewQuiz({formData, setFormData}) {
@@ -53,14 +54,36 @@ function NewQuiz({formData, setFormData}) {
       .catch((err) => console.log(err))
   }
 
-  // function addOptions() {
-  //   const newOption = document.createElement("input")
-  //   newOption.type = 'text'
-  //   newOption.name = 'options'
-  //   newOption.classList.add('options border-2 border-black rounded-md ps-2 bg-green-300 mb-3 focus:bg-green-400 w-[90%]')
-  // }
+  function addOptions(e) {
+    e.preventDefault()
+
+    setOptionList([...optionList, ""])
+  }
+
+  function removeOption(e, index) {
+    e.preventDefault()
+    
+    let optionListCopy = [...optionList]
+    optionListCopy.splice(index, 1)
+    setOptionList(optionListCopy)
+  }
+
+  function trackOptionChange(e, indexRef) {
+    let value = e.target.value
+    let optionListCopy = optionList.map((option, index) => {
+      if (indexRef === index) {
+        return value
+      } else {
+        return option
+      }
+    })
+    setOptionList(optionListCopy)    
+  }
 
 
+  useEffect(() => {
+    console.log(optionList)
+  }, [optionList])
 
   return (
     <div className='basis-1/2 mt-16'>
@@ -126,31 +149,29 @@ function NewQuiz({formData, setFormData}) {
 
           {optionList.map((option, index) => {
             return (
-              <input key={index}
+              <div key={index} className='mb-3'>
+                <input
                 type="text" 
                 name='options'
-                className='options border-2 border-black rounded-md ps-2 bg-green-300 mb-3 focus:bg-green-400 w-[90%]'
+                className='options border-2 border-black rounded-md ps-2 bg-green-300 focus:bg-green-400 w-[85%] me-2'
+                value={option}
+                onChange={(e) => trackOptionChange(e, index)}
+                required
               />
+                { optionList.length >= 3 && <AiOutlineMinusCircle
+                  onClick={(e) => removeOption(e, index)}
+                  className='inline text-2xl'
+                />}
+              </div>
+              
             )
           })}
-          {/* <input 
-            type="text" 
-            name='options'
-            className='options border-2 border-black rounded-md ps-2 bg-green-300 mb-3 focus:bg-green-400 w-[90%]'
-          />
-          <br />
-          <input 
-            type='text' 
-            name='options' 
-            className='options border-2 border-black rounded-md ps-2 bg-green-300 mb-2 focus:bg-green-400 w-[90%]'
-          />
-          <br />
-          <input 
-            type='text' 
-            name='options' 
-            className='options border-2 border-black rounded-md ps-2 bg-green-300 mb-2 focus:bg-green-400 w-[90%]'
-          />
-          <br/> */}
+          <button onClick={addOptions}
+            className='mb-4 text-sm bg-blue-200 px-2 py-1 rounded-md drop-shadow-md hover:bg-white hover:shadow-md transition-all duration-75'
+          >
+            Add More Option
+          </button>
+          <br/>
 
 
           <label 
