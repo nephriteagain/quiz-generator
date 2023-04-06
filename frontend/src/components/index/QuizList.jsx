@@ -18,17 +18,17 @@ export default function QuizList({quizList, setQuizList}) {
 
 
   return (
-    <section className='grid grid-cols-4 gap-5 mt-10'>
+    <section className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mt-10'>
       
       {
         quizList.map((quiz, index) => {
           const { title, createdBy, _id } = quiz
           return (
-            <div key={index} className='container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100'>
-              <h3 className='text-xl font-semibold mb-1'>
+            <div key={index} className='container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100 overflow-hidden max-w-[300px] mx-auto'>
+              <h3 className='text-xl font-semibold mb-1 whitespace-nowrap'>
                 {title}
               </h3>
-              <p className='text-sm ms-1 mb-3 opacity-80'>
+              <p className='text-sm ms-1 mb-3 opacity-80 whitespace-nowrap'>
                  {createdBy}
               </p>
               <Link to={`/quiz/${_id}`}>

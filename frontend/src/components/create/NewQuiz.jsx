@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import {AiOutlineMinusCircle} from 'react-icons/ai'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
@@ -20,6 +20,23 @@ function NewQuiz({formData, setFormData}) {
     options.forEach((option) => {
       optionValue.push(option.value)
     })
+
+    const isAnswerAvailable = optionValue.some((option) => answer.value === option)
+
+    if (!isAnswerAvailable) {
+      return alert('answer has no match on options')
+    }
+
+    let sameAnswertoOptionCount = 0
+    optionValue.forEach(option => {
+      if (option === answer.value) {
+        sameAnswertoOptionCount++
+      }
+    })
+    if (sameAnswertoOptionCount > 1) {
+      return alert('answer should only match one option')
+    }
+
     setFormData({
       title: title.value,
       createdBy: createdBy.value,
@@ -79,9 +96,8 @@ function NewQuiz({formData, setFormData}) {
     let optionListCopy = optionList.map((option, index) => {
       if (indexRef === index) {
         return value
-      } else {
-        return option
-      }
+      } 
+      return option
     })
     setOptionList(optionListCopy)    
   }
@@ -89,7 +105,7 @@ function NewQuiz({formData, setFormData}) {
 
 
   return (
-    <div className='basis-1/2 mt-16'>
+    <div className='md:basis-1/2 mt-16'>
     <div>
       <form onSubmit={handleSubmit}>
         <h3 className="5 text-3xl font-bold mb-5">Create a New Quiz</h3>
@@ -164,7 +180,7 @@ function NewQuiz({formData, setFormData}) {
                 { optionList.length >= 3 && <AiOutlineMinusCircle
                   onClick={(e) => removeOption(e, index)}
                   className='inline text-2xl'
-                />}
+                />} 
               </div>
               
             )
@@ -188,6 +204,7 @@ function NewQuiz({formData, setFormData}) {
             type="text" 
             name='answer' 
             className='answer border-2 border-black rounded-md ps-2 bg-green-300 mb-4 focus:bg-green-400 w-[90%]'
+            required
           />
         </div>
         <input 

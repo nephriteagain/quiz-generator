@@ -60,20 +60,22 @@ function Answer({data, setData}) {
   }
 
   if (!showResult) return (
-    <form onSubmit={handleSubmit} className="container mt-10 mb-5">
+    <form onSubmit={handleSubmit} className="container mt-10 mb-5 bg-stone-200 rounded-xl drop-shadow-xl shadow-xl px-4 py-4 max-w-[800px] mx-auto">
       <h2 className="text-2xl font-semibold mb-1">
         {title}
       </h2>
       <h3 className="text-md ms-1 mb-3 opacity-80">
         {author}
       </h3>
-      <ol className="list-decimal">
+      <ol className="list-decimal px-4 mt-10">
         {questions?.length && questions.map((question, index) => {
           const {questionText, options, _id} = question
           return (
             <div key={index}>
             <li>
+              <div className="text-lg font-semibold">
               {questionText}
+              </div>
               <ol type>
                 <br />
                 {options?.length && options.map((option, index) => {
@@ -90,7 +92,7 @@ function Answer({data, setData}) {
                     htmlFor={questionText}
                     className="text-md"
                     >
-                      <span>{lowerRoman[index]}. </span>
+                      <span className="opacity-75">{lowerRoman[index]}. </span>
                       {option}
                     </label><br/>
                   </li>
@@ -114,18 +116,18 @@ function Answer({data, setData}) {
   )
 
   if (showResult) return (
-    <div className="container mt-10 mb-5">
+    <div className="container mt-10 mb-5 bg-stone-200 rounded-xl drop-shadow-xl shadow-xl px-4 py-2 max-w-[800px] mx-auto">
       <h2  className="text-2xl font-semibold mb-1">
         {title}
       </h2>
       <h3 className="text-md ms-1 mb-3 opacity-80">
         {author}
       </h3>
-      <ol>
+      <ol className="mt-10">
         {result.map((item, index) => {
           return (
             <li key={index}>
-              <div>
+              <div className="text-lg font-semibold">
               {item.userCorrect? 
               <span><AiOutlineCheck className="inline text-green-600 text-xl me-2"/> {item.questionText}</span> : 
               <span><RxCross2 className="inline text-red-600 text-xl me-2"/> {item.questionText}</span>}              
@@ -140,13 +142,13 @@ function Answer({data, setData}) {
                   item.userAnswer === option ?
                   <span><GrRadialSelected className="inline absolute left-10 bottom-1/2 translate-y-1/2"/> 
                     <span className="ms-16">
-                      <span>{lowerRoman[index]}. </span>
+                      <span className="opacity-75">{lowerRoman[index]}. </span>
                       {option}
                     </span>
                   </span> :
                   <span><GrRadial className="inline absolute left-10 bottom-1/2 translate-y-1/2"/> 
                   <span className="ms-16">
-                  <span>{lowerRoman[index]}. </span>
+                  <span className="opacity-75">{lowerRoman[index]}. </span>
                     {option}
                   </span>
                 </span>

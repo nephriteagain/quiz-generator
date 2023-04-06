@@ -10,7 +10,7 @@ function Create() {
 
   return (
     <div>
-      <div className='container flex flex-row'>
+      <div className='container md:flex md:flex-row'>
         <NewQuiz formData={formData} setFormData={setFormData}/>
         <QuestionList formData={formData} setFormData={setFormData}/>
       </div>      
