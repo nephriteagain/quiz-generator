@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Home from './pages/Home'
 import Create from './pages/Create'
 import Quiz from './pages/Quiz'
+import Version from './components/Version'
 
 import './App.css'
 
@@ -13,6 +14,7 @@ function App() {
   
 
   return (
+    <>
     <Router>
       <Routes>
         <Route exact path='/' element={<Home quizList={quizList} setQuizList={setQuizList}/>}/>
@@ -20,6 +22,8 @@ function App() {
         <Route path='/quiz/:quizId' element={<Quiz quizList={quizList}/>}/>
       </Routes>
     </Router>
+    <Version />
+    </>
   )
 }
 

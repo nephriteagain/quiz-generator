@@ -3,7 +3,7 @@ import {AiOutlineMinusCircle} from 'react-icons/ai'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-function NewQuiz({formData, setFormData}) {
+function NewQuiz({formData, setFormData, setShowSubmitModal}) {
   const [ optionList, setOptionList ] = useState(["", "", ""])
 
   const navigate = useNavigate()
@@ -69,12 +69,7 @@ function NewQuiz({formData, setFormData}) {
   }
 
   function submitData() {
-    axios.post('http://localhost:3000/api/v1/', formData)
-      .then((res) => {
-        console.log(res.data)
-        navigate('/')
-      })
-      .catch((err) => console.log(err))
+    setShowSubmitModal(true)
   }
 
   function addOptions(e) {
