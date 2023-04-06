@@ -12,7 +12,7 @@ function Create() {
     <div>
       <div className='container flex flex-row'>
         <NewQuiz formData={formData} setFormData={setFormData}/>
-        <QuestionList formData={formData}/>
+        <QuestionList formData={formData} setFormData={setFormData}/>
       </div>      
       <Link to="/"
         className='text-xl bg-yellow-100 px-2 py-1 border-black border-2 rounded-lg shadow-lg'

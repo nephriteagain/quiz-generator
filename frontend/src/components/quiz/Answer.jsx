@@ -4,6 +4,8 @@ import {AiOutlineCheck} from 'react-icons/ai'
 import {RxCross2} from 'react-icons/rx'
 import {GrRadialSelected, GrRadial} from 'react-icons/gr'
 
+import lowerRoman from "../../lib/data/lowerRoman"
+
 function Answer({data, setData}) {
   const { title, createdBy: author, questions, _id } = data
   const [ showResult, setShowResult ] = useState(false)
@@ -88,6 +90,7 @@ function Answer({data, setData}) {
                     htmlFor={questionText}
                     className="text-md"
                     >
+                      <span>{lowerRoman[index]}. </span>
                       {option}
                     </label><br/>
                   </li>
@@ -137,11 +140,13 @@ function Answer({data, setData}) {
                   item.userAnswer === option ?
                   <span><GrRadialSelected className="inline absolute left-10 bottom-1/2 translate-y-1/2"/> 
                     <span className="ms-16">
+                      <span>{lowerRoman[index]}. </span>
                       {option}
                     </span>
                   </span> :
                   <span><GrRadial className="inline absolute left-10 bottom-1/2 translate-y-1/2"/> 
                   <span className="ms-16">
+                  <span>{lowerRoman[index]}. </span>
                     {option}
                   </span>
                 </span>

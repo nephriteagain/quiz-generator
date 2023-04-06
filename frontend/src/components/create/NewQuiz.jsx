@@ -1,9 +1,12 @@
 import {useState, useEffect} from 'react'
 import {AiOutlineMinusCircle} from 'react-icons/ai'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function NewQuiz({formData, setFormData}) {
   const [ optionList, setOptionList ] = useState(["", "", ""])
+
+  const navigate = useNavigate()
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -20,7 +23,9 @@ function NewQuiz({formData, setFormData}) {
     setFormData({
       title: title.value,
       createdBy: createdBy.value,
-      questions: formData.questions ? [
+
+      questions: formData.questions ? 
+      [
         ...formData?.questions, 
         {
         questionText: question.value,
@@ -42,15 +47,16 @@ function NewQuiz({formData, setFormData}) {
 
     question.value = ''
     answer.value = ''
-    options.forEach((option) => {
-      option.value = ''
-    })
-    
+    setOptionList(['', '', ''])
+
   }
 
   function submitData() {
     axios.post('http://localhost:3000/api/v1/', formData)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data)
+        navigate('/')
+      })
       .catch((err) => console.log(err))
   }
 
@@ -81,9 +87,6 @@ function NewQuiz({formData, setFormData}) {
   }
 
 
-  useEffect(() => {
-    console.log(optionList)
-  }, [optionList])
 
   return (
     <div className='basis-1/2 mt-16'>

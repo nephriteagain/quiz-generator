@@ -18,13 +18,13 @@ export default function QuizList({quizList, setQuizList}) {
 
 
   return (
-    <section>
-      <br/>
+    <section className='grid grid-cols-4 gap-5 mt-10'>
+      
       {
         quizList.map((quiz, index) => {
           const { title, createdBy, _id } = quiz
           return (
-            <div key={index} className='container'>
+            <div key={index} className='container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100'>
               <h3 className='text-xl font-semibold mb-1'>
                 {title}
               </h3>
