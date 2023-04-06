@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react'
 import axios from 'axios'
 
 function NewQuiz({formData, setFormData}) {
+  const [ optionList, setOptionList ] = useState(["", "", ""])
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -51,6 +52,13 @@ function NewQuiz({formData, setFormData}) {
       .then((res) => console.log(res.data))
       .catch((err) => console.log(err))
   }
+
+  // function addOptions() {
+  //   const newOption = document.createElement("input")
+  //   newOption.type = 'text'
+  //   newOption.name = 'options'
+  //   newOption.classList.add('options border-2 border-black rounded-md ps-2 bg-green-300 mb-3 focus:bg-green-400 w-[90%]')
+  // }
 
 
 
@@ -114,7 +122,18 @@ function NewQuiz({formData, setFormData}) {
             Options
           </label>
           <br />
-          <input 
+
+
+          {optionList.map((option, index) => {
+            return (
+              <input key={index}
+                type="text" 
+                name='options'
+                className='options border-2 border-black rounded-md ps-2 bg-green-300 mb-3 focus:bg-green-400 w-[90%]'
+              />
+            )
+          })}
+          {/* <input 
             type="text" 
             name='options'
             className='options border-2 border-black rounded-md ps-2 bg-green-300 mb-3 focus:bg-green-400 w-[90%]'
@@ -131,14 +150,16 @@ function NewQuiz({formData, setFormData}) {
             name='options' 
             className='options border-2 border-black rounded-md ps-2 bg-green-300 mb-2 focus:bg-green-400 w-[90%]'
           />
-          <br />
+          <br/> */}
+
+
           <label 
             htmlFor="answer"
             className='font-semibold'
           >
             Answer
           </label>
-          <br />
+          <br />          
           <input 
             type="text" 
             name='answer' 
