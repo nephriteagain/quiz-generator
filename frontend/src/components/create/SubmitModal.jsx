@@ -1,14 +1,20 @@
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
+
+
 
 function SubmitModal({formData, setFormData ,setShowSubmitModal}) {
 
-  const navigate = useNavigate()
 
   function submitData() {
     axios.post('http://localhost:3000/api/v1/', formData)
       .then((res) => {
         console.log(res.data)
+        const title = document.querySelector('.title')
+        const author = document.querySelector('.author')
+
+        title.value = ''
+        author.value = ''
+
         setFormData({})
       })
       .catch((err) => console.log(err))

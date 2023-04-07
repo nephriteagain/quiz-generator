@@ -5,6 +5,7 @@ import NewQuiz from "../components/create/NewQuiz"
 import QuestionList from '../components/create/QuestionList'
 import SubmitModal from '../components/create/SubmitModal'
 
+
 function Create() {
   const [formData, setFormData] = useState({})
   const [ showSubmitModal, setShowSubmitModal ] = useState(false)

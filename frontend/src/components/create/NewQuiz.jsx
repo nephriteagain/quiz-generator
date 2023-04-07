@@ -145,11 +145,12 @@ function NewQuiz({formData, setFormData, setShowSubmitModal}) {
             Question
           </label>
           <br/>
-          <input 
+          <textarea 
             type="text" 
             name='question' 
             className='question border-2 border-black rounded-md ps-2 bg-green-300 focus:bg-green-400 w-[90%]'
             required
+            rows="3"
           />
           <br />
           <label 
@@ -164,17 +165,18 @@ function NewQuiz({formData, setFormData, setShowSubmitModal}) {
           {optionList.map((option, index) => {
             return (
               <div key={index} className='mb-3'>
-                <input
+                <textarea
                 type="text" 
                 name='options'
                 className='options border-2 border-black rounded-md ps-2 bg-green-300 focus:bg-green-400 w-[85%] me-2'
                 value={option}
                 onChange={(e) => trackOptionChange(e, index)}
                 required
+                rows="1"
               />
                 { optionList.length >= 3 && <AiOutlineMinusCircle
                   onClick={(e) => removeOption(e, index)}
-                  className='inline text-2xl'
+                  className='inline text-2xl cursor-pointer'
                 />} 
               </div>
               
@@ -195,11 +197,12 @@ function NewQuiz({formData, setFormData, setShowSubmitModal}) {
             Answer
           </label>
           <br />          
-          <input 
+          <textarea 
             type="text" 
             name='answer' 
             className='answer border-2 border-black rounded-md ps-2 bg-green-300 mb-4 focus:bg-green-400 w-[90%]'
             required
+            rows='1'
           />
         </div>
         <input 
