@@ -23,7 +23,7 @@ function SignUp() {
 
   function handleSubmit(e) {
     e.preventDefault()
-    console.log(samePassword, digitBool, symbolBool, hasNoSpecialSymbolBool)
+
     if ( !samePassword || !digitBool || !symbolBool || !hasNoSpecialSymbolBool) {
       return
     }
