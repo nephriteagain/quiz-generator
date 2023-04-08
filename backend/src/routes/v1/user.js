@@ -14,9 +14,9 @@ router.post('/signup', async (req, res) => {
 
   const user = new User(
     {
-      firstName, 
-      lastName, 
       email, 
+      firstName: firstName.toLowerCase(), 
+      lastName: lastName.toLowerCase(), 
       password: hashPassword(password)
     }
   )
@@ -29,6 +29,7 @@ router.post('/signup', async (req, res) => {
 }
 })
 
+
 router.post('/signin', async (req, res) => {
   if (!req.body.password || !req.body.email) {
     res.send(400)    
@@ -36,7 +37,16 @@ router.post('/signin', async (req, res) => {
   const user = await User.findOne({email: req.body.email})
   const passwordMatched = comparePassword(req.body.password, user.password)
   if (passwordMatched) {
-    res.send({message: 'you are logged in'})
+    if (req.session.user) {
+      res.send({message: 'you are already logged in'})
+    } else {
+      req.session.user = {
+        id: user._id
+      }
+
+      res.send({message: 'logged in'})
+    }
+    console.log(req.session)
   } else {
     res.send({message: 'incorrect email or password'})
   }
