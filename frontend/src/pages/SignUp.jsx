@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
+import { useNavigate} from 'react-router-dom'
+
 import { AiOutlineCheck } from 'react-icons/ai'
 import { RxCross2 } from 'react-icons/rx'
 
@@ -11,14 +13,16 @@ import {
   specialSymbolChecker
 } from '../lib/helper/signUpFormChecker'
 
+
 function SignUp() {
   const [ password, setPassword ] = useState('')
   const [ confirmPass, setConfirmPass ] = useState('')
-
   const [ samePassword, setSamePassword ] = useState(false)
   const [ digitBool, setDigitBool ] = useState(false)
   const [ symbolBool, setSymbolBool ] = useState(false)
   const [ hasNoSpecialSymbolBool, sethasNoSpecialSymbolBool ] = useState(false)
+
+  const navigate = useNavigate()
 
 
   function handleSubmit(e) {
@@ -34,7 +38,15 @@ function SignUp() {
 
 
     axios.post('http://localhost:3000/api/v1/user/signup', formData)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        console.log(res.data)
+        if (res.data?.email) {
+          navigate('/user/signin')
+        }
+        else if (res.data?.code === 11000) {
+          alert('user email already exist')
+        }
+      })
       .catch((err) => console.log(err.message))
   }
 

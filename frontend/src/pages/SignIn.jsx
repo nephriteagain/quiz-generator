@@ -1,6 +1,8 @@
 import axios from "axios"
+import { useGlobalContext } from "../context/UserContext"
 
 function SignIn() {
+  const { setUser } = useGlobalContext()
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -9,10 +11,14 @@ function SignIn() {
     const userData = Object.fromEntries(formData)
 
 
-    axios.post('http://localhost:3000/api/v1/user/signin', userData)
-      .then(res => console.log(res.data))
+    axios.post('http://localhost:3000/api/v1/user/signin',  userData, {withCredentials: true} )
+      .then(res => {
+        const data = res.data
+        if (data.message === 'logged in' || data.message === 'already logged in') {
+          setUser(data.userData)
+        }
+      })
       .catch(err => console.log(err.message))
-
   }
 
   return (

@@ -1,14 +1,25 @@
-import {useState} from 'react'
-import { Link } from 'react-router-dom'
+import {useState, useEffect} from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { useGlobalContext } from '../context/UserContext'
 
 import NewQuiz from "../components/create/NewQuiz"
 import QuestionList from '../components/create/QuestionList'
 import SubmitModal from '../components/create/SubmitModal'
 
-
 function Create() {
   const [formData, setFormData] = useState({})
   const [ showSubmitModal, setShowSubmitModal ] = useState(false)
+
+  const { user } = useGlobalContext()
+
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!user) {
+      return navigate('/')
+    }
+  }, [])
 
   return (
     <div>

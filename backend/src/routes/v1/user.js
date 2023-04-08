@@ -37,19 +37,51 @@ router.post('/signin', async (req, res) => {
   const user = await User.findOne({email: req.body.email})
   const passwordMatched = comparePassword(req.body.password, user.password)
   if (passwordMatched) {
-    if (req.session.user) {
-      res.send({message: 'you are already logged in'})
-    } else {
+    const { firstName, lastName, email, _id } = user
+
+    if (!req.session.user) {
       req.session.user = {
         id: user._id
       }
-
-      res.send({message: 'logged in'})
+      res.send({
+        message: 'logged in',
+        userData: {
+          firstName,
+          lastName,
+          email,
+          id: _id
+        }
+      })
+    } else {
+      res.send({
+        message: 'already logged in',
+        userData: {
+          firstName,
+          lastName,
+          email,
+          id: _id
+        }
+      })
     }
-    console.log(req.session)
+    
   } else {
     res.send({message: 'incorrect email or password'})
   }
+})
+
+router.get('/signout', async (req, res) => {
+  const db = mongoose.connection
+  const sessionDb = db.collection('sessions')
+  const userSession = await sessionDb.findOneAndDelete({_id: req.sessionID})
+  req.session.destroy(err => {
+    if (err) {
+      console.log(err)
+      res.status(500).send(userSession)
+    } else {
+      res.clearCookie('connect.sid')
+      res.send(userSession)
+    }
+  })
 
 
 })
