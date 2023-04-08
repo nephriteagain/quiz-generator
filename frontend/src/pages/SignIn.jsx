@@ -1,8 +1,11 @@
 import axios from "axios"
 import { useGlobalContext } from "../context/UserContext"
+import { useNavigate } from "react-router-dom"
 
 function SignIn() {
   const { setUser } = useGlobalContext()
+
+  const navigate = useNavigate()
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -16,6 +19,7 @@ function SignIn() {
         const data = res.data
         if (data.message === 'logged in' || data.message === 'already logged in') {
           setUser(data.userData)
+          navigate('/')
         }
       })
       .catch(err => console.log(err.message))

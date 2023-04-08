@@ -1,9 +1,11 @@
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useGlobalContext } from "../../context/UserContext"
-import SignOut from "../login/Signout"
+import SignOut from "../user/Signout"
 
 function Login() {
   const { user } = useGlobalContext()
+  const [ showLogin, setShowLogin ] = useState(true)
   
 
   const navigate = useNavigate()
@@ -16,9 +18,17 @@ function Login() {
     return navigate('/user/signup')
   }
 
+  useEffect(() => {
+    if (user === null) {
+      setShowLogin(true)
+    } else {
+      setShowLogin(false)
+    }
+  }, [user])
+
   return (
     <section className="absolute top-4 right-4">
-      { !user?
+      { showLogin?
       <>
         <button onClick={handleSignIn}
           className="me-4 px-2 py-1  bg-blue-200 shadow-md rounded-md text-lg drop-shadow-md hover:scale-110 hover:bg-blue-300 active:scale-95 transition-all duration-75"

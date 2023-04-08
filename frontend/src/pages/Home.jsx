@@ -3,6 +3,7 @@ import { useGlobalContext } from "../context/UserContext"
 import QuizList from "../components/home/QuizList"
 import CreateQuiz from "../components/home/CreateQuiz"
 import Login from "../components/home/Login"
+import Welcome from "../components/home/Welcome"
 
 function Home({quizList, setQuizList}) {
 
@@ -16,6 +17,7 @@ function Home({quizList, setQuizList}) {
       <Login/>
       { user && <CreateQuiz /> }
       <QuizList quizList={quizList} setQuizList={setQuizList}/>
+      <Welcome />
       </>
   )
 }
