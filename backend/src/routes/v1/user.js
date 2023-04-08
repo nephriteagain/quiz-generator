@@ -5,11 +5,19 @@ const User = require('../../db/Schema/UserSchema')
 const router = Router()
 
 router.post('/signup', async (req, res) => {
-  const user = new User(req.body)
+  if (req.body.password !== req.body.confirmPass) {
+   res.send(400) 
+  }
+
+  const {firstName, lastName, email, password} = req.body
+
+  const user = new User(
+    {firstName, lastName, email, password}
+  )
 
   try {
-    await Quiz.create(user)
-    res.send(user)
+    await User.create(user)
+    res.send(user)  
 } catch (error) {
     res.send(error)
 }

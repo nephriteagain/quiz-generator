@@ -38,7 +38,7 @@ router.get('/quiz/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     const quiz = new Quiz(req.body)
     try {
-        await Quiz.create(quiz)
+        await Quiz.create(quiz) 
         res.send(quiz)
     } catch (error) {
         res.send(error)

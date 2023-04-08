@@ -32,7 +32,10 @@ function SignUp() {
     let formData = new FormData(e.currentTarget)
     formData = Object.fromEntries(formData)    
 
-    console.log(formData)
+
+    axios.post('http://localhost:3000/api/v1/user/signup', formData)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err.message))
   }
 
   useEffect(() => {
