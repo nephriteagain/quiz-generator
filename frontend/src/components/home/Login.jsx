@@ -19,20 +19,22 @@ function Login() {
   }
 
   useEffect(() => {
-    if (user === null) {
-      setShowLogin(true)
-    } else {
+    console.log(user, 'user')
+
+    if (user !== null) {
       setShowLogin(false)
+    } else {
+      setShowLogin(true)
     }
   }, [user])
 
-  return (
+
+
+  if (showLogin) return (
     <section className="absolute top-4 right-4">
-      { showLogin?
-      <>
-        <button onClick={handleSignIn}
-          className="me-4 px-2 py-1  bg-blue-200 shadow-md rounded-md text-lg drop-shadow-md hover:scale-110 hover:bg-blue-300 active:scale-95 transition-all duration-75"
-        >
+      <button onClick={handleSignIn}
+        className="me-4 px-2 py-1  bg-blue-200 shadow-md rounded-md text-lg drop-shadow-md hover:scale-110 hover:bg-blue-300 active:scale-95 transition-all duration-75"
+      >
         Sign In
       </button>
       <button onClick={handleSignUp}
@@ -40,13 +42,18 @@ function Login() {
       >
         Sign Up
       </button> 
-      </> :
-      <SignOut />
-      } 
-
-
     </section>
   )
+
+  else if (!showLogin) return (
+    <section className="absolute top-4 right-4">
+        <SignOut />
+    </section>
+  )
+
 }
+
+
+
 
 export default Login

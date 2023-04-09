@@ -8,15 +8,10 @@ function SignOut() {
 
   const { user, setUser } = useGlobalContext()
 
-  function logOut() {  
-    axios.get('http://localhost:3000/api/v1/user/signout', {withCredentials: true})
+  async function logOut() {  
+    await axios.get('http://localhost:3000/api/v1/user/signout', {withCredentials: true})
       .then(res => {
-
-        const data = res.data
-        if (data.value === null) {
-          setUser(null)
-
-        }
+        setUser(null)
       })
       .catch(err => {
         console.log(err)
