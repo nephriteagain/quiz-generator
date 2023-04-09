@@ -1,9 +1,12 @@
+import { useEffect } from "react"
 import axios from "axios"
 import { useGlobalContext } from "../context/UserContext"
 import { useNavigate } from "react-router-dom"
 
+
+
 function SignIn() {
-  const { setUser } = useGlobalContext()
+  const { user, setUser } = useGlobalContext()
 
   const navigate = useNavigate()
 
@@ -24,6 +27,13 @@ function SignIn() {
       })
       .catch(err => console.log(err.message))
   }
+
+  useEffect(() => {
+    if (user !== null) {
+      navigate('/')
+    }
+  }, [user])
+  
 
   return (
     <div className="mx-auto max-w-[500px]">

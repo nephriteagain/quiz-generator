@@ -10,10 +10,8 @@ function SubmitModal({formData, setFormData ,setShowSubmitModal}) {
       .then((res) => {
         console.log(res.data)
         const title = document.querySelector('.title')
-        const author = document.querySelector('.author')
 
         title.value = ''
-        author.value = ''
 
         setFormData({})
       })

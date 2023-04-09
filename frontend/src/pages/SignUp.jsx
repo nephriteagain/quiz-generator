@@ -4,7 +4,7 @@ import { useNavigate} from 'react-router-dom'
 
 import { AiOutlineCheck } from 'react-icons/ai'
 import { RxCross2 } from 'react-icons/rx'
-
+import { useGlobalContext } from "../context/UserContext"
 
 import {
   matchPasswordChecker,
@@ -21,6 +21,8 @@ function SignUp() {
   const [ digitBool, setDigitBool ] = useState(false)
   const [ symbolBool, setSymbolBool ] = useState(false)
   const [ hasNoSpecialSymbolBool, sethasNoSpecialSymbolBool ] = useState(false)
+
+  const { user } = useGlobalContext()
 
   const navigate = useNavigate()
 
@@ -58,6 +60,12 @@ function SignUp() {
     specialSymbolChecker(password, sethasNoSpecialSymbolBool)
 
   }, [password, confirmPass])
+
+  useEffect(() => {
+    if (user !== null) {
+      navigate('/')
+    }
+  }, [user])
 
   return (
     <div className="mx-auto max-w-[500px]">

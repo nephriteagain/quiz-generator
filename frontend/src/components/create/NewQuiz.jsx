@@ -2,20 +2,26 @@ import {useState, useEffect, useRef} from 'react'
 import {AiOutlineMinusCircle} from 'react-icons/ai'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { useGlobalContext } from '../../context/UserContext'
 
 function NewQuiz({formData, setFormData, setShowSubmitModal}) {
   const [ optionList, setOptionList ] = useState(["", "", ""])
+  const { user } = useGlobalContext()
 
   const navigate = useNavigate()
 
   function handleSubmit(e) {
     e.preventDefault()
     
+    const { firstName, lastName, id } = user
+
     const title = document.querySelector('.title')
-    const createdBy = document.querySelector('.author')
+    // const createdBy = document.querySelector('.author')
     const question = document.querySelector('.question')
     const answer = document.querySelector('.answer')
     const options = document.querySelectorAll('.options')
+    const createdBy = `${firstName} ${lastName}`
+    const authorId = id
     const optionValue = []
     options.forEach((option) => {
       optionValue.push(option.value)
@@ -39,8 +45,8 @@ function NewQuiz({formData, setFormData, setShowSubmitModal}) {
 
     setFormData({
       title: title.value,
-      createdBy: createdBy.value,
-
+      createdBy: createdBy,
+      authorId: authorId,
       questions: formData.questions ? 
       [
         ...formData?.questions, 
@@ -104,7 +110,7 @@ function NewQuiz({formData, setFormData, setShowSubmitModal}) {
     <div>
       <form onSubmit={handleSubmit}>
         <h3 className="5 text-3xl font-bold mb-5">Create a New Quiz</h3>
-        <div className='mb-4'>
+        <div className='mb-12'>
           <label 
             htmlFor='title'
             className='font-semibold text-xl'
@@ -119,21 +125,7 @@ function NewQuiz({formData, setFormData, setShowSubmitModal}) {
             required
           />
         </div>
-        <div className='mb-8'>
-          <label 
-            htmlFor='author'
-            className='font-semibold text-lg'
-          >
-            Author
-          </label>
-          <br/>
-          <input 
-            type="text" 
-            name='author'  
-            className='author border-2 border-black rounded-md ps-2 bg-green-300 focus:bg-green-400 w-[90%]'
-            required
-          />
-        </div>
+
         <div>
           <h2 className='mb-2 text-lg'>
             Add a Question

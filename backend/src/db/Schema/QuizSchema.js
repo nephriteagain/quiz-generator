@@ -14,6 +14,10 @@ const QuizSchema = new mongoose.Schema({
         required: true,
         default: new Date()
     },
+    authorId: {
+      type: String,
+      required: true
+    },
     questions: [
         {
             questionText: {

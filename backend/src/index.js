@@ -7,6 +7,7 @@ require('dotenv').config()
 
 const QuizRouter = require('./routes/v1/quiz')
 const UserRouter = require('./routes/v1/user')
+const ProfileRouter = require('./routes/v1/profile')
 
 const app = express()
 const PORT = "3000"
@@ -35,5 +36,6 @@ app.use(session({
 
 app.use("/api/v1", QuizRouter)
 app.use("/api/v1/user", UserRouter)
+app.use('/api/v1/profile', ProfileRouter)
 
 app.listen(PORT, () => console.log(`connected to post ${PORT}`))
