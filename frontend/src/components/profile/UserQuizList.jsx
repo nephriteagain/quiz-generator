@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { RiDeleteBin5Line } from 'react-icons/ri'
+
 
 import QuizModal from "./QuizModal";
+import DeleteModal from "./DeleteModal";
 
 function UserQuizList({userQuiz, setUserQuiz}) {
   const [ showQuizModal, setShowQuizModal] = useState(false)
-  const [ quizModalData, setQuizModalData ] = useState([])
+  const [ quizModalData, setQuizModalData ] = useState({})
+  const [ showDeleteModal, setShowDeleteModal ] = useState(false)
+  const [ deleteQuizId, setQuizDeleteId] = useState(null)
+
+  const deleteRef = useRef(null)
 
   function displayModal(id) {
     const dataToDisplay = userQuiz.find((quiz) => {
@@ -13,6 +20,14 @@ function UserQuizList({userQuiz, setUserQuiz}) {
 
     setQuizModalData(dataToDisplay)
     setShowQuizModal(true)
+  }
+
+  function confirmDelete(id, e) {
+
+    setShowDeleteModal(true)
+    setQuizDeleteId(id)
+
+    deleteRef.current = e.currentTarget.parentNode
   }
 
 
@@ -37,7 +52,7 @@ function UserQuizList({userQuiz, setUserQuiz}) {
       
         return (
 
-          <div key={index} className="container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100 overflow-hidden max-w-[300px] mx-auto">
+          <div key={index} className="container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100 overflow-visible max-w-[300px] mx-auto relative group">
             <div className="text-lg font-semibold mb-4">
               <p className="text-center">
                 {title}
@@ -60,7 +75,12 @@ function UserQuizList({userQuiz, setUserQuiz}) {
                   Show Quiz
                 </button>
               </div>
-            </div>  
+            </div>
+            <RiDeleteBin5Line
+              className="absolute top-2 right-2 text-lg text-red-500 invisible group-hover:visible hover:scale-110 transition-all duration-100 cursor-pointer"              
+              onClick={(e) => confirmDelete(_id, e)}
+            />
+            
           </div>
 
           
@@ -74,6 +94,14 @@ function UserQuizList({userQuiz, setUserQuiz}) {
       quizModalData={quizModalData} 
       setQuizModalData={setQuizModalData}
       setShowQuizModal={setShowQuizModal}
+    />}
+    { showDeleteModal && 
+      <DeleteModal
+        showDeleteModal={showDeleteModal}
+        setShowDeleteModal={setShowDeleteModal}
+        deleteQuizId={deleteQuizId}
+        setQuizDeleteId={setQuizDeleteId}
+        deleteRef={deleteRef}
     />}
     </>
   )
