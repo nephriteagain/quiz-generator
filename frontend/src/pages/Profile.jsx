@@ -9,7 +9,7 @@ import UserQuizList from "../components/profile/UserQuizList"
 function Profile() {
 
   const [ userQuiz, setUserQuiz ] = useState([])
-  
+
   const { user } = useGlobalContext()
 
   const navigate = useNavigate()
@@ -17,7 +17,6 @@ function Profile() {
   async function fetchData () {
     await axios.get(`http://localhost:3000/api/v1/profile/${user.id}`)
       .then((res) => {
-        console.log(res.data)
         setUserQuiz(res.data)
       })
       .catch((err) => {
@@ -35,8 +34,9 @@ function Profile() {
   }, [user])
 
 
+
   return (
-    <div>
+    <div className="mt-[15%]">      
       <UserQuizList userQuiz={userQuiz} setUserQuiz={setUserQuiz}/>
     </div>
   )
