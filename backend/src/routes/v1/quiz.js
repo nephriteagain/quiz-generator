@@ -90,4 +90,22 @@ router.post('/quiz/:id', async (req, res) => {
 }
 })
 
+router.post('/delete', async (req, res) => {
+  const id = req.body.id
+
+  // if invalid id response 400
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    res.send(400)
+  }
+
+  const deletedQuiz = await Quiz.findByIdAndDelete(id)
+    .then((response) => {
+      res.send(response)
+    })
+    .catch((err) => {
+      res.send(err)
+    })
+  
+})
+
 module.exports = router

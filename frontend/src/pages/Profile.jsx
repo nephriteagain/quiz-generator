@@ -37,7 +37,7 @@ function Profile() {
 
   return (
     <div className="mt-[15%]">      
-      <UserQuizList userQuiz={userQuiz} setUserQuiz={setUserQuiz}/>
+      <UserQuizList userQuiz={userQuiz} setUserQuiz={setUserQuiz} fetchData={fetchData}/>
     </div>
   )
 }

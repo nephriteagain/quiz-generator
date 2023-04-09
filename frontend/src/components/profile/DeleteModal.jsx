@@ -6,12 +6,22 @@ import { RxCross2 } from 'react-icons/rx'
 
 
 
-export default function DeleteModal({setShowDeleteModal, deleteQuizId, deleteRef, setDeleteQuizId, showDeleteModal}) {
+export default function DeleteModal({setShowDeleteModal, deleteQuizId, deleteRef, setQuizDeleteId, showDeleteModal, fetchData}) {
 
   const modalRef = useRef()
   
-  function deleteQuiz(id) {
+  async function deleteQuiz(id) {
     console.log(id)
+    axios.post('http://localhost:3000/api/v1/delete', {id}, {withCredentials: true})
+      .then(async (res) => {
+        await fetchData()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+      
+    setShowDeleteModal(false)
+    setQuizDeleteId(null)
   }
 
   function cancelDelete() {

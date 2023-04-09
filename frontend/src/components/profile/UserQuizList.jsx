@@ -5,7 +5,7 @@ import { RiDeleteBin5Line } from 'react-icons/ri'
 import QuizModal from "./QuizModal";
 import DeleteModal from "./DeleteModal";
 
-function UserQuizList({userQuiz, setUserQuiz}) {
+function UserQuizList({userQuiz, setUserQuiz, fetchData}) {
   const [ showQuizModal, setShowQuizModal] = useState(false)
   const [ quizModalData, setQuizModalData ] = useState({})
   const [ showDeleteModal, setShowDeleteModal ] = useState(false)
@@ -102,6 +102,7 @@ function UserQuizList({userQuiz, setUserQuiz}) {
         deleteQuizId={deleteQuizId}
         setQuizDeleteId={setQuizDeleteId}
         deleteRef={deleteRef}
+        fetchData={fetchData}
     />}
     </>
   )

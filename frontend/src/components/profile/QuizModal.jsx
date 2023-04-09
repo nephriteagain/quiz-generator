@@ -3,7 +3,6 @@ import lowerRoman from '../../lib/data/lowerRoman'
 
 
 function QuizModal({quizModalData, setQuizModalData, setShowQuizModal}) {
-  console.log(quizModalData)
 
     const { title, questions } = quizModalData
 
