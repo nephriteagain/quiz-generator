@@ -19,7 +19,6 @@ function Login() {
   }
 
   useEffect(() => {
-    console.log(user, 'user')
 
     if (user !== null) {
       setShowLogin(false)

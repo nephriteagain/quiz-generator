@@ -9,6 +9,7 @@ import Quiz from './pages/Quiz'
 import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Profile from './pages/Profile'
+import UpdateQuiz from './pages/UpdateQuiz'
 import Error from './pages/Error'
 
 import './App.css'
@@ -17,7 +18,7 @@ function App() {
   const [quizList, setQuizList] = useState([])
 
   const { user } = useGlobalContext()
-  let { quizId, profileId } = useParams()
+  let { quizId, profileId, editQuizId } = useParams()
   
 
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path='/user/signin' element={<SignIn />} />
         <Route path='/user/signup' element={<SignUp />} />
         { user && <Route path='/profile/:profileId' element={<Profile />} /> }
+        { user && <Route path='/profile/:profileId/update/:editQuizId' element={<UpdateQuiz />} />}
         <Route path='*' element={<Error />} />
       </Routes>
     </Router>

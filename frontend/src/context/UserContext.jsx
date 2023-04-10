@@ -4,13 +4,15 @@ const GlobalContext = createContext()
 
 export const GlobalProvider = ({children}) => {
   const [ user, setUser ] = useState(null)
-
+  const [ quizToUpdate, setQuizToUpdate] = useState({})
   
   return (
     <GlobalContext.Provider 
       value={{
         user,
-        setUser
+        setUser,
+        quizToUpdate,
+        setQuizToUpdate
       }}
     >
       {children}

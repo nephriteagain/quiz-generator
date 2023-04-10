@@ -11,7 +11,7 @@ export default function DeleteModal({setShowDeleteModal, deleteQuizId, deleteRef
   const modalRef = useRef()
   
   async function deleteQuiz(id) {
-    console.log(id)
+
     axios.post('http://localhost:3000/api/v1/delete', {id}, {withCredentials: true})
       .then(async (res) => {
         await fetchData()

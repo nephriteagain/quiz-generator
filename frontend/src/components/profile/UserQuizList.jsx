@@ -1,6 +1,10 @@
 import { useState, useRef } from "react";
-import { RiDeleteBin5Line } from 'react-icons/ri'
+import { useNavigate } from "react-router-dom";
 
+import { RiDeleteBin5Line } from 'react-icons/ri'
+import { FiEdit } from 'react-icons/fi'
+
+import { useGlobalContext } from "../../context/UserContext";
 
 import QuizModal from "./QuizModal";
 import DeleteModal from "./DeleteModal";
@@ -11,7 +15,12 @@ function UserQuizList({userQuiz, setUserQuiz, fetchData}) {
   const [ showDeleteModal, setShowDeleteModal ] = useState(false)
   const [ deleteQuizId, setQuizDeleteId] = useState(null)
 
+  const { user, setQuizToUpdate } = useGlobalContext()
+
   const deleteRef = useRef(null)
+  const editRef = useRef(null)
+
+  const navigate = useNavigate()
 
   function displayModal(id) {
     const dataToDisplay = userQuiz.find((quiz) => {
@@ -20,6 +29,7 @@ function UserQuizList({userQuiz, setUserQuiz, fetchData}) {
 
     setQuizModalData(dataToDisplay)
     setShowQuizModal(true)
+
   }
 
   function confirmDelete(id, e) {
@@ -28,6 +38,11 @@ function UserQuizList({userQuiz, setUserQuiz, fetchData}) {
     setQuizDeleteId(id)
 
     deleteRef.current = e.currentTarget.parentNode
+  }
+
+  function confirmUpdate(quiz, e) {
+    setQuizToUpdate(quiz)
+    navigate(`/profile/${user.id}/update/${quiz._id}`)
   }
 
 
@@ -79,6 +94,10 @@ function UserQuizList({userQuiz, setUserQuiz, fetchData}) {
             <RiDeleteBin5Line
               className="absolute top-2 right-2 text-lg text-red-500 invisible group-hover:visible hover:scale-110 transition-all duration-100 cursor-pointer"              
               onClick={(e) => confirmDelete(_id, e)}
+            />
+            <FiEdit
+              className="absolute top-8 right-2 text-lg text-blue-500 invisible group-hover:visible hover:scale-110 transition-all duration-100 cursor-pointer"              
+              onClick={(e) => confirmUpdate(quiz, e)}
             />
             
           </div>
