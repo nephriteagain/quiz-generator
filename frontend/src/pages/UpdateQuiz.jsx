@@ -7,14 +7,22 @@ export default function UpdateQuiz() {
   const [ title, setTitle ] = useState(quizToUpdate.title)
   const [ questions, setQuestions] = useState(quizToUpdate.questions)
 
-  function submitUpdate() {
+  function submitUpdate(e) {
+    e.preventDefault()
+
     const toSubmit = {...quizToUpdate, title: title, questions: questions}
+    
+
+    // guard clauses
+    
+
     console.log(toSubmit)
+    // guard clauses
   }
 
   return (
     <div className="mt-16">
-      <form>
+      <form onSubmit={submitUpdate}>
         <div>       
           <input className="block"
             type="text"
@@ -87,17 +95,19 @@ export default function UpdateQuiz() {
               
             )
           })}
-        </div>    
+        </div>
+        <div>
+          <input 
+            type="submit" 
+            value='Submit Edit'
+          />
+          <button
+          >
+            Cancel
+          </button>
+        </div>
       </form>
-      <button
-        onClick={submitUpdate}
-      >
-        Save Edit
-      </button>
-      <button
-      >
-        Cancel
-      </button>
+      
     </div>
     
   )
