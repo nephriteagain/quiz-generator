@@ -32,10 +32,6 @@ app.use(session({
   })    
 }))
 
-app.use((req, res, next) => {
-  console.log(req.session.user)
-  next()
-})
 
 
 app.use("/api/v1", QuizRouter)

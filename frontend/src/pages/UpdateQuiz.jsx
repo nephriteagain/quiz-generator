@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import axios from "axios"
 import { useGlobalContext } from "../context/UserContext"
-
 
 
 import {AiOutlineMinusCircle } from 'react-icons/ai'
@@ -9,8 +9,9 @@ import { MdDelete} from 'react-icons/md'
 import { TiDelete } from 'react-icons/ti'
 import { BsCheckCircleFill} from 'react-icons/bs'
 
+
 export default function UpdateQuiz() {
-  const { quizToUpdate, setQuizToUpdate } = useGlobalContext()
+  const { quizToUpdate, setQuizToUpdate, user } = useGlobalContext()
 
   const [ title, setTitle ] = useState(quizToUpdate.title)
   const [ questions, setQuestions] = useState(quizToUpdate.questions)
@@ -22,10 +23,16 @@ export default function UpdateQuiz() {
   function submitUpdate(e) {    
     e.preventDefault()
     const toSubmit = {...quizToUpdate, title: title, questions: questions}
-  
-    // guard clauses  
-    console.log(toSubmit)
-    // guard clauses
+
+    async function fetchUpdatedData() {
+      await axios.post(`http://localhost:3000/api/v1/update/${user.id}`, toSubmit, {withCredentials: true})
+        .then((res) => {
+          setQuizToUpdate(res.data)
+        })
+        .catch((err) => console.log(err))
+    }
+
+    fetchUpdatedData()
   }
 
 
@@ -155,9 +162,11 @@ export default function UpdateQuiz() {
                           setQuestions(newQ)
                         }}
                       />
-                       <AiOutlineMinusCircle className='inline text-xl cursor-pointer absolute translate-y-2'
+                       {  options.length > 2 &&
+                        <AiOutlineMinusCircle className='inline text-xl cursor-pointer absolute translate-y-2'
                         onClick={() => removeOption(index, ind)}
                        />
+                       }
                       </div>
                       
                     )
@@ -186,6 +195,7 @@ export default function UpdateQuiz() {
                     }}
                   />
                 </div>
+                {/* fix this in the future */}
                 { !hideDeleteButton &&
                   <MdDelete className="absolute text-3xl top-4 right-4 text-red-700 z-10 hover:scale-110 active:scale-90 transition-all duration-100 invisible group-hover:visible"
                   onClick={showConfirmation}
@@ -201,6 +211,7 @@ export default function UpdateQuiz() {
                   />
                 </div>
                 }
+                {/* fix this in the future */}
                 
               </div>
               
@@ -213,11 +224,11 @@ export default function UpdateQuiz() {
           Add New Question
         </div>
         <div className="flex items-center justify-center">
-          <input className="cursor-pointer bg-green-700 text-white px-3 py-2 mb-8 rounded-lg me-auto hover:scale-110 active:scale-95 transition-all duration-100" 
+          <input className="cursor-pointer bg-green-700 text-white px-3 py-2 mb-8 rounded-lg me-auto hover:scale-110 active:scale-95 transition-all duration-100 shadow-lg drop-shadow-lg" 
             type="submit" 
             value='Save Changes'
           />
-          <span className="cursor-pointer bg-green-700 text-white px-3 py-2 mb-8 rounded-lg ms-auto hover:scale-110 active:scale-95 transition-all duration-100"
+          <span className="cursor-pointer bg-green-700 text-white px-3 py-2 mb-8 rounded-lg ms-auto hover:scale-110 active:scale-95 transition-all duration-100 shadow-lg drop-shadow-lg"
             onClick={() => navigate('/profile/:profileId')}
           >
             Cancel

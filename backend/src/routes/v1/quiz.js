@@ -108,4 +108,15 @@ router.post('/delete', async (req, res) => {
   
 })
 
+// add a auth middleware here, use req.session.user.id and req.params
+router.post('/update/:id', async(req, res) => {
+  const quizId = req.body._id
+
+  const updatedQuiz =  Quiz.findByIdAndUpdate(quizId, req.body)
+    .then(response => {
+      res.send(response)
+    })
+    .catch(err => res.send(err))
+})
+
 module.exports = router
