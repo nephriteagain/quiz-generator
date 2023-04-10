@@ -13,7 +13,7 @@ function QuizModal({quizModalData, setQuizModalData, setShowQuizModal}) {
     }
 
     return (
-    <div className="absolute lg:w-[60%] md:w-[70%] sm:w-[80%] w-[90%] h-[80vh] z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-stone-300 rounded-xl overflow-auto px-8 py-4 drop-shadow-xl shadow-xl">
+    <div className="absolute lg:w-[60%] md:w-[70%] sm:w-[80%] w-[90%] h-[80vh] z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-stone-200 rounded-xl overflow-auto px-8 py-4 drop-shadow-xl shadow-xl">
       <div>
         <p className="text-xl font-bold">
           {title}

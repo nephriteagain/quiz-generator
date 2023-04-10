@@ -101,7 +101,7 @@ export default function UpdateQuiz() {
 
 
   return (
-    <div className="mt-16 w-[90%] max-w-[600px] mx-auto">
+    <div className="mt-16 w-[90%] max-w-[600px] mx-auto bg-neutral-200 px-8 py-8 rounded-xl shadow-2xl drop-shadow-lg">
       <form onSubmit={submitUpdate}>
         <div className=" mb-6">
           <label htmlFor="title" className="font-semibold text-lg">
