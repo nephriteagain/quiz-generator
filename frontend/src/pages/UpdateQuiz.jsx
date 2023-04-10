@@ -1,5 +1,9 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useGlobalContext } from "../context/UserContext"
+
+
+
 import {AiOutlineMinusCircle } from 'react-icons/ai'
 import { MdDelete} from 'react-icons/md'
 import { TiDelete } from 'react-icons/ti'
@@ -12,6 +16,8 @@ export default function UpdateQuiz() {
   const [ questions, setQuestions] = useState(quizToUpdate.questions)
   const [ showConfirmDeleteButtons, setShowConfirmDeleteButtons ] = useState(false)
   const [ hideDeleteButton, setHideDeleteButton ] = useState(false)
+
+  const navigate = useNavigate()
 
   function submitUpdate(e) {    
     e.preventDefault()
@@ -37,6 +43,31 @@ export default function UpdateQuiz() {
     setQuestions(transformedQuestions)
   }
 
+  function addNewOption(questionIndex) {
+    const newOption = [...questions[questionIndex].options, '']
+    
+    const newQuestions = questions.map((q, index) => {
+      if (index === questionIndex) {
+        return {...q, options: newOption}
+      }
+      return q
+    })
+
+    setQuestions(newQuestions)
+  }
+
+  function addNewQuestion() {
+    const newQuestions = [
+      ...questions,
+      {
+        questionText: '',
+        options: ['', '', ''],
+        correctAnswer: ''
+      }
+    ]
+
+    setQuestions(newQuestions)
+  }
 
 
   function removeQuestion(questionIndex) {
@@ -44,7 +75,7 @@ export default function UpdateQuiz() {
       return index !== questionIndex
     })
 
-    console.log(newQuestions)
+    setQuestions(newQuestions)
     setShowConfirmDeleteButtons(false)
     setHideDeleteButton(false)
     return 
@@ -133,6 +164,13 @@ export default function UpdateQuiz() {
                   })}
                 </div>
                 <div>
+                  <div className="text-sm rounded-md bg-green-200 px-2 py-1 shadow-md opacity-80 hover:scale-105 active:scale-95 transition-all duration-100 cursor-pointer w-fit"
+                    onClick={() => addNewOption(index)}
+                  >
+                    add new option
+                  </div>
+                </div>
+                <div>
                   <textarea className="w-[80%] px-2 rounded-md mt-8 shadow-md bg-blue-100"
                     type='text'
                     value={correctAnswer}
@@ -169,18 +207,25 @@ export default function UpdateQuiz() {
             )
           })}
         </div>
-        <div>
-          <input 
+        <div onClick={addNewQuestion}
+          className="-mt-6 ms-6 text-lg w-fit px-4 py-1 bg-indigo-300 rounded-lg mb-8 shadow-lg drop-shadow-lg hover:bg-indigo-700 hover:text-white hover:scale-110 active:scale-90 transition-all duration-150 cursor-pointer"
+        >
+          Add New Question
+        </div>
+        <div className="flex items-center justify-center">
+          <input className="cursor-pointer bg-green-700 text-white px-3 py-2 mb-8 rounded-lg me-auto hover:scale-110 active:scale-95 transition-all duration-100" 
             type="submit" 
-            value='Submit Edit'
+            value='Save Changes'
           />
-          <button
+          <span className="cursor-pointer bg-green-700 text-white px-3 py-2 mb-8 rounded-lg ms-auto hover:scale-110 active:scale-95 transition-all duration-100"
+            onClick={() => navigate('/profile/:profileId')}
           >
             Cancel
-          </button>
+          </span>
         </div>
       </form>
-      
+        
+
     </div>
     
   )
