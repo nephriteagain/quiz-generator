@@ -69,6 +69,7 @@ router.post('/signin', async (req, res) => {
   }
 })
 
+
 router.get('/signout', async (req, res) => {
   const db = mongoose.connection
   const sessionDb = db.collection('sessions')
