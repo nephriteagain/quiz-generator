@@ -7,7 +7,7 @@ const router = Router()
 
 router.post('/signup', async (req, res) => {
   if (req.body.password !== req.body.confirmPass) {
-   res.send(400) 
+   res.status(401).send({message: 'password does not match'})
   }
 
   const {firstName, lastName, email, password} = req.body
@@ -23,16 +23,16 @@ router.post('/signup', async (req, res) => {
 
   try {
     await User.create(user)
-    res.send(user)  
+    res.status(201).send(user)  
 } catch (error) {
-    res.send(error)
+    res.status(500).send(error)
 }
 })
 
 
 router.post('/signin', async (req, res) => {
   if (!req.body.password || !req.body.email) {
-    res.send(400)    
+    res.status(400).send({message: 'missing credentials'})
   }
   const user = await User.findOne({email: req.body.email})
   const passwordMatched = comparePassword(req.body.password, user.password)
@@ -44,7 +44,7 @@ router.post('/signin', async (req, res) => {
         id: _id,
         email: email
       }
-      res.send({
+      res.status(200).send({
         message: 'logged in',
         userData: {
           firstName,
@@ -54,7 +54,7 @@ router.post('/signin', async (req, res) => {
         }
       })
     } else {
-      res.send({
+      res.status(200).send({
         message: 'already logged in',
         userData: {
           firstName,
@@ -81,7 +81,7 @@ router.get('/signout', async (req, res) => {
       res.status(500).send(userSession)
     } else {
       res.clearCookie('connect.sid')
-      res.send(userSession)
+      res.status(200).send(userSession)
     }
   })
 

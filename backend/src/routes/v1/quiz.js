@@ -11,9 +11,9 @@ router.get('/', async (req, res) => {
           const {_id, title, createdBy} = item
           return {_id, title, createdBy}
         })
-        res.send(dataToSend)
+        res.status(200).send(dataToSend)
     } catch (error) {
-        res.send(error)
+        res.status(500).send(error)
     }
     
 })
@@ -24,12 +24,12 @@ router.get('/quiz/:id', async (req, res) => {
     if (mongoose.Types.ObjectId.isValid(id)) {
         try {
             const quiz = await Quiz.findOne({_id: id})
-            res.send(quiz)
+            res.status(200).send(quiz)
         } catch (error) {
-            res.send(error)
+            res.status(500).send(error)
         }
     } else {
-        res.send({message: 'Invalid ID'})
+        res.status(404).send({message: 'Invalid ID'})
     }
 })
 
@@ -39,9 +39,9 @@ router.post('/', async (req, res) => {
     const quiz = new Quiz(req.body)
     try {
         await Quiz.create(quiz) 
-        res.send(quiz)
+        res.status(201).send(quiz)
     } catch (error) {
-        res.send(error)
+        res.status(400).send(error)
     }
     
 })
@@ -81,12 +81,12 @@ router.post('/quiz/:id', async (req, res) => {
       })
   
 
-      res.send(checkedQuizQuestion)
+      res.status(200).send(checkedQuizQuestion)
     } catch (error) {
-        res.send({message: 'error'})
+        res.status(500).send({message: 'error'})
     }
 } else {
-    res.send({message: 'Invalid ID'})
+    res.status(400).send({message: 'Invalid ID'})
 }
 })
 
@@ -95,15 +95,15 @@ router.post('/delete', async (req, res) => {
 
   // if invalid id response 400
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    res.send(400)
+    res.status(400).send({message: 'invalid id'})
   }
 
   const deletedQuiz = await Quiz.findByIdAndDelete(id)
     .then((response) => {
-      res.send(response)
+      res.status(200).send(response)
     })
     .catch((err) => {
-      res.send(err)
+      res.status(500).send(err)
     })
   
 })
@@ -112,7 +112,7 @@ router.post('/delete', async (req, res) => {
 router.post('/update/:id', async(req, res) => {
 
   if (!req.session?.user) {
-    res.sendStatus(400)
+    res.status(400).send({message: 'user not logged in'})
     return
   }
 
@@ -120,16 +120,16 @@ router.post('/update/:id', async(req, res) => {
   const authorId = req.body.authorId
   const  sessionUserId = req.session.user.id
 
-  console.log(authorId, sessionUserId)
+  // console.log(authorId, sessionUserId)
   if (authorId !== sessionUserId) {
-    res.sendStatus(400)
+    res.status(400).send({message: 'unauthorized'})
   }
 
   const updatedQuiz =  Quiz.findByIdAndUpdate(quizId, req.body)
     .then(response => {
-      res.send(response)
+      res.status(201).send(response)
     })
-    .catch(err => res.send(err))
+    .catch(err => res.status(500).send(err))
 })
 
 module.exports = router

@@ -6,12 +6,12 @@ const router = Router()
 
 router.use( '/:id', (req, res, next) => {
   if (!req.params?.id) {
-    res.send(400)
+    res.status(401).send({message: 'unauthorized'})
   }
   
   const id = req.params.id
   if (!mongoose.Types.ObjectId.isValid(id)) {
-    res.send({message: 'invalid id'})
+    res.status(400).send({message: 'invalid id'})
   }
   
   next()
@@ -22,10 +22,10 @@ router.get('/:id', async (req, res) => {
 
   try {
     const allUserQuiz = await Quiz.find({authorId: id})
-    res.send(allUserQuiz)
+    res.status(200).send(allUserQuiz)
 
   } catch (error) {
-    res.send(error)
+    res.status(500).send(error)
   }
    
 })
