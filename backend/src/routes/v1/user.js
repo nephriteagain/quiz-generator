@@ -66,7 +66,7 @@ router.post('/signin', async (req, res) => {
     }
     
   } else {
-    res.send({message: 'incorrect email or password'})
+    res.status(400).send({message: 'incorrect email or password'})
   }
 })
 

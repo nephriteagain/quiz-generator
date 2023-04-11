@@ -10,6 +10,7 @@ import { TiDelete } from 'react-icons/ti'
 import { BsCheckCircleFill} from 'react-icons/bs'
 
 
+
 export default function UpdateQuiz() {
   const { quizToUpdate, setQuizToUpdate, user } = useGlobalContext()
 

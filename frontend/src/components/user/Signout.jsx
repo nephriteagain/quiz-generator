@@ -2,6 +2,8 @@ import axios from 'axios'
 import { useGlobalContext } from '../../context/UserContext'
 
 
+
+
 function SignOut() {
 
 
@@ -9,7 +11,7 @@ function SignOut() {
   const { user, setUser } = useGlobalContext()
 
   async function logOut() {  
-    await axios.get('http://localhost:3000/api/v1/user/signout', {withCredentials: true})
+    await axios.get(`http://localhost:3000/api/v1/user/signout`, {withCredentials: true})
       .then(res => {
         setUser(null)
       })

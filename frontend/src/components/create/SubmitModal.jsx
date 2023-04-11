@@ -6,7 +6,7 @@ function SubmitModal({formData, setFormData ,setShowSubmitModal}) {
 
 
   function submitData() {
-    axios.post('http://localhost:3000/api/v1/', formData)
+    axios.post(`http://localhost:3000/api/v1/`, formData)
       .then((res) => {
         console.log(res.data)
         const title = document.querySelector('.title')

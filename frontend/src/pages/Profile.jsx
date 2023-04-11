@@ -6,6 +6,8 @@ import { useGlobalContext } from "../context/UserContext"
 
 import UserQuizList from "../components/profile/UserQuizList"
 
+
+
 function Profile() {
 
   const [ userQuiz, setUserQuiz ] = useState([])

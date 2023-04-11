@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom'
 
 import axios from 'axios'
 
+
+
 export default function QuizList({quizList, setQuizList}) {
+
 
   
   useEffect(() => {
-    axios.get('http://localhost:3000/api/v1/')
+    axios.get(`http://localhost:3000/api/v1/`)
       .then((response) => {
         setQuizList(response.data)
       })

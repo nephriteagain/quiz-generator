@@ -5,6 +5,8 @@ import axios from 'axios'
 import Answer from "../components/quiz/Answer"
 
 
+
+
 function Quiz({quizList}) {
   const [data, setData] = useState({})
 

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 
 
+
 function SignIn() {
   const { user, setUser } = useGlobalContext()
 
@@ -17,7 +18,7 @@ function SignIn() {
     const userData = Object.fromEntries(formData)
 
 
-    axios.post('http://localhost:3000/api/v1/user/signin',  userData, {withCredentials: true} )
+    axios.post(`http://localhost:3000/api/v1/user/signin`,  userData, {withCredentials: true} )
       .then(res => {
         const data = res.data
         if (data.message === 'logged in' || data.message === 'already logged in') {
