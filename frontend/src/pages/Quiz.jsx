@@ -36,11 +36,13 @@ function Quiz({quizList}) {
   return (
     <>
     <Answer data={data} setData={setData}/>
-    <Link to="/"
-      className='text-xl bg-yellow-100 px-2 py-1 border-black border-2 rounded-lg shadow-lg'
-    >
-      Back To Home
-    </Link>
+    <div className='text-xl bg-yellow-100 px-2 py-1 shadow-md drop-shadow-md rounded-lg w-fit mx-auto mb-4 hover:scale-110 active:scale-95 transition-all duration-100'>
+        <Link to="/"
+        >
+          Back To Home
+        </Link>
+      </div>
+    
     </>
   )
 }

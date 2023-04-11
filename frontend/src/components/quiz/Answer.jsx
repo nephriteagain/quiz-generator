@@ -14,6 +14,7 @@ function Answer({data, setData}) {
   const [ result, setResult ] = useState({})
   const [ score, setScore ] = useState({score: 0, total: 0})
   
+
   function handleSubmit(e) {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
@@ -62,7 +63,7 @@ function Answer({data, setData}) {
   }
 
   if (!showResult) return (
-    <form onSubmit={handleSubmit} className="container mt-10 mb-5 bg-stone-200 rounded-xl drop-shadow-xl shadow-xl px-4 py-4 max-w-[800px] mx-auto">
+    <form onSubmit={handleSubmit} className="container mt-10 mb-8 bg-stone-200 rounded-xl drop-shadow-xl shadow-xl px-6 py-6 max-w-[600px] mx-auto">
       <h2 className="text-2xl font-semibold mb-1">
         {title}
       </h2>

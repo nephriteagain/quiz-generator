@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import axios from "axios"
 
 import { useGlobalContext } from "../context/UserContext"
@@ -40,7 +40,16 @@ function Profile() {
   return (  
     <div className="mt-[15%]">      
       <UserQuizList userQuiz={userQuiz} setUserQuiz={setUserQuiz} fetchData={fetchData}/>
+
+      <div className='text-xl bg-yellow-100 px-2 py-1 rounded-lg shadow-md drop-shadow-md w-fit absolute bottom-4 left-[50%] translate-x-[-50%] hover:scale-110 active:scale-95 transition-all duration-100'>
+        <Link to="/"
+          className="px-8"
+        >
+          Back To Home
+        </Link>
+      </div>
     </div>
+
   )
 }
 

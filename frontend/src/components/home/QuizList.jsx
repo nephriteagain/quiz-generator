@@ -35,7 +35,7 @@ export default function QuizList({quizList, setQuizList}) {
                  {createdBy}
               </p>
               <Link to={`/quiz/${_id}`}>
-              <p className='border w-fit px-2 py-1 rounded-md bg-green-400 hover:bg-green-700 hover:text-white transition-all duration-75'>
+              <p className='w-fit px-2 py-1 rounded-md bg-green-400 hover:bg-green-700 hover:text-white shadow-md drop-shadow-md transition-all duration-75'>
                 Answer Quiz!
               </p>
               </Link>

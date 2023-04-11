@@ -1,4 +1,5 @@
-import {useState} from 'react'
+import {useState, useEffect, useRef} from 'react'
+
 import { Link, useNavigate } from 'react-router-dom'
 
 import { useGlobalContext } from '../context/UserContext'
@@ -7,19 +8,31 @@ import NewQuiz from "../components/create/NewQuiz"
 import QuestionList from '../components/create/QuestionList'
 import SubmitModal from '../components/create/SubmitModal'
 
+
 function Create() {
+  const pageRef = useRef()
+
   const [formData, setFormData] = useState({})
   const [ showSubmitModal, setShowSubmitModal ] = useState(false)
+  const [ bgModalHeight , setBgModalHeight ]  = useState(window.innerHeight)
 
 
+
+useEffect(() => {
+  window.onresize = () => {
+    const pageHeight = pageRef.current.getBoundingClientRect().height
+    setBgModalHeight(pageHeight)
+  }
+},[])
 
   return (
-    <div>
+    <div ref={pageRef}>
       { showSubmitModal &&
         <SubmitModal 
         formData={formData}
         setFormData={setFormData}
         setShowSubmitModal={setShowSubmitModal}
+        bgModalHeight={bgModalHeight}
       />
       }
       <div className='container md:flex md:flex-row'>
@@ -33,11 +46,12 @@ function Create() {
           setFormData={setFormData}
         />
       </div>      
-      <Link to="/"
-        className='text-xl bg-yellow-100 px-2 py-1 border-black border-2 rounded-lg shadow-lg'
-      >
-        Back to Home!
-      </Link>
+      <div className='text-xl bg-yellow-100 px-2 py-1 rounded-lg shadow-md drop-shadow-md w-fit mx-auto mt-8 mb-4 hover:scale-110 active:scale-95 transition-all duration-100'>
+        <Link to="/"
+        >
+          Back To Home
+        </Link>
+      </div>
     </div>
   )
 }

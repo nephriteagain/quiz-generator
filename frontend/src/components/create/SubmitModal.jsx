@@ -1,9 +1,11 @@
+import { useRef } from "react"
 import axios from "axios"
 
 
 
-function SubmitModal({formData, setFormData ,setShowSubmitModal}) {
+function SubmitModal({formData, setFormData ,setShowSubmitModal, bgModalHeight}) {
 
+  const windowRef = useRef()
 
   function submitData() {
     axios.post(`http://localhost:3000/api/v1/`, formData)
@@ -23,13 +25,15 @@ function SubmitModal({formData, setFormData ,setShowSubmitModal}) {
     setShowSubmitModal(false)
   }
 
+
+
   return (
-    <div className="absolute top-0 left-0 z-[2] w-[100vw] h-[100vh]">
-      <div className="absolute bg-black opacity-70 z-[3] w-[100vw] h-[100vh]">
+    <div className="absolute top-0 left-0 z-[2] w-[100vw]" style={{height: `${bgModalHeight}px`}} >
+      <div className="absolute bg-black opacity-70 z-[3] w-[100vw] h-[100%]">
 
       </div>
-      <div className="min-w-[350px] min-h-[250px] absolute top-2/4 left-2/4 -translate-x-1/2 -translate-y-1/2 px-4 py-4 bg-slate-200 z-[4] rounded-xl">
-        <h1 className="text-5xl text-center font-bold mt-6">
+      <div className="min-w-[350px] min-h-[250px] absolute top-[50vh] left-[50vw] -translate-x-1/2 -translate-y-1/2 px-4 py-4 bg-slate-200 z-[4] rounded-xl">
+        <h1 className="text-4xl text-center font-bold mt-6">
           Save Quiz
         </h1>
         <div className="w-full flex mt-[80px]">

@@ -22,6 +22,9 @@ function QuestionList({formData, setFormData}) {
 
   return (
     <div className="md:basis-1/2 mt-16 bg-stone-200 rounded-xl drop-shadow-xl shadow-lg px-4 py-2">
+      <h1 className="font-bold mb-8 mt-2 text-3xl text-center">
+        Preview
+      </h1>
       <h2 className="text-2xl font-semibold mb-1 mt-4">
         {title}
       </h2>
