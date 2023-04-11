@@ -116,14 +116,19 @@ export default function UpdateQuiz() {
             onChange={(e) => setTitle(e.currentTarget.value)}
           />
         </div>
-        <p className="font-semibold mb-2">
+        <p className="font-semibold mb-6">
           Questions:
         </p>
         <div>
           {questions.map((q, index) => {
             const {questionText, options, correctAnswer } = q
             return (
-              <div key={index} className="mb-12 bg-orange-100 px-4 py-4 rounded-xl shadow-xl relative group">                
+              <div key={index} className="mb-12 bg-orange-100 px-6 py-6 rounded-xl shadow-xl relative group">                
+                <div className="absolute top-[-0.75rem] left-[-0.75rem] bg-green-300 w-8 h-8 flex items-center justify-center rounded-[50%] shadow-md drop-shadow-md">
+                  <p className="font-semibold">
+                    {index + 1}
+                  </p>
+                </div>
                 <div>                
                 <textarea className="w-[80%] px-2 rounded-md mb-4 shadow-md bg-blue-100"
                   type="text"
@@ -141,9 +146,13 @@ export default function UpdateQuiz() {
                 />                
                 </div>
                 <div>
+                  <p className="text-sm mb-2 ms-1 font-light">
+                    Options
+                  </p>
                   {options.map((op, ind) => {
                     return (
                       <div  key={ind} className="relative">
+                        
                         <textarea className="w-[80%] px-2 py-1 rounded-md mb-2 me-2 text-sm shadow-md bg-blue-100"
                         type='text'
                         value={op}
@@ -182,7 +191,10 @@ export default function UpdateQuiz() {
                   </div>
                 </div>
                 <div>
-                  <textarea className="w-[80%] px-2 rounded-md mt-8 shadow-md bg-blue-100"
+                  <p className="mt-8 ms-1  text-sm font-light ">
+                    Answer
+                  </p>
+                  <textarea className="w-[80%] px-2 rounded-md mt-2 shadow-md bg-blue-100"
                     type='text'
                     value={correctAnswer}
                     rows='1'
