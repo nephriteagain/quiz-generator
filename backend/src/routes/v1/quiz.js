@@ -110,7 +110,20 @@ router.post('/delete', async (req, res) => {
 
 // add a auth middleware here, use req.session.user.id and req.params
 router.post('/update/:id', async(req, res) => {
+
+  if (!req.session?.user) {
+    res.sendStatus(400)
+    return
+  }
+
   const quizId = req.body._id
+  const authorId = req.body.authorId
+  const  sessionUserId = req.session.user.id
+
+  console.log(authorId, sessionUserId)
+  if (authorId !== sessionUserId) {
+    res.sendStatus(400)
+  }
 
   const updatedQuiz =  Quiz.findByIdAndUpdate(quizId, req.body)
     .then(response => {

@@ -41,7 +41,8 @@ router.post('/signin', async (req, res) => {
 
     if (!req.session.user) {
       req.session.user = {
-        id: user._id
+        id: _id,
+        email: email
       }
       res.send({
         message: 'logged in',

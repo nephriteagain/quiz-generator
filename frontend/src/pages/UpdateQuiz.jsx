@@ -27,6 +27,7 @@ export default function UpdateQuiz() {
     async function fetchUpdatedData() {
       await axios.post(`http://localhost:3000/api/v1/update/${user.id}`, toSubmit, {withCredentials: true})
         .then((res) => {
+          navigate('/profile/:profileId')
           setQuizToUpdate(res.data)
         })
         .catch((err) => console.log(err))
