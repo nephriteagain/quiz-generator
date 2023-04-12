@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"
 
 
 function SignIn() {
-  const { user, setUser, fetchData } = useGlobalContext()
+  const { user, setUser,  } = useGlobalContext()
 
   const navigate = useNavigate()
 

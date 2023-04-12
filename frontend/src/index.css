@@ -21,12 +21,6 @@
     font-family: 'Inter', sans-serif;
 
   }
-  /* .page-title {
-    background: linear-gradient(90deg, red, blue);
-    background-clip: text;
-    color: transparent;
-
-  } */
 
   @media (max-width: 576px) {
     html {

@@ -7,10 +7,11 @@ export const GlobalProvider = ({children}) => {
   const [ user, setUser ] = useState(null)
   const [ quizToUpdate, setQuizToUpdate] = useState({})
   const [ userQuiz, setUserQuiz ] = useState([])
-  const [quizList, setQuizList] = useState([])
+  const [ quizList, setQuizList] = useState([])
+  const [ quizPage, setQuizPage ] = useState(1)
   
 
-  async function fetchData () {
+  async function fetchUserData () {
     await axios.get(`http://localhost:3000/api/v1/profile/${user.id}`, {withCredentials: true})
       .then((res) => {
         setUserQuiz(res.data)
@@ -20,8 +21,9 @@ export const GlobalProvider = ({children}) => {
       })
   }
   
-  async function fetchQuizList() {
-    await axios.get(`http://localhost:3000/api/v1/`, {withCredentials: true})
+  async function fetchQuizList(page) {
+    
+    await axios.get(`http://localhost:3000/api/v1/?page=${page}`, {withCredentials: true})
       .then((response) => {
         setQuizList(response.data)
       })
@@ -32,7 +34,7 @@ export const GlobalProvider = ({children}) => {
 
 
   useEffect(() => {
-    fetchQuizList()
+    fetchQuizList(1)
   }, [])
 
 
@@ -51,7 +53,7 @@ export const GlobalProvider = ({children}) => {
 
   useEffect(() => {
     if (user !== null) {
-      fetchData()
+      fetchUserData()
     }
 
   }, [user])
@@ -66,10 +68,12 @@ export const GlobalProvider = ({children}) => {
         setQuizToUpdate,
         userQuiz,
         setUserQuiz,
-        fetchData,
+        fetchUserData,
         quizList,
         setQuizList,
-        fetchQuizList
+        fetchQuizList,
+        quizPage,
+        setQuizPage
       }}
     >
       {children}

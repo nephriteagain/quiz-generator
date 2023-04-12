@@ -6,7 +6,7 @@ import { useGlobalContext } from "../../context/UserContext"
 
 function SubmitModal({formData, setFormData ,setShowSubmitModal, bgModalHeight}) {
   console.log(formData, 'formdata')
-  const { fetchData, fetchQuizList } = useGlobalContext()
+  const { fetchUserData, fetchQuizList, setQuizPage } = useGlobalContext()
 
 
   function submitData() {
@@ -18,8 +18,9 @@ function SubmitModal({formData, setFormData ,setShowSubmitModal, bgModalHeight})
         title.value = ''
         
         setFormData({})
-        fetchData()
-        fetchQuizList()
+        fetchUserData()
+        fetchQuizList(1)
+        setQuizPage(1)
       })
       .catch((err) => console.log(err))
       setShowSubmitModal(false)

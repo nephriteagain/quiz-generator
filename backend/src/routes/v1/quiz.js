@@ -5,16 +5,20 @@ const Quiz = require('../../db/Schema/QuizSchema')
 const router = Router()
 
 router.get('/', async (req, res) => {
-    try {
-        const allQuizzes = await Quiz.find()
-        const dataToSend = allQuizzes.map((item) => {
-          const {_id, title, createdBy} = item
-          return {_id, title, createdBy}
-        })
-        res.status(200).send(dataToSend)
-    } catch (error) {
-        res.status(500).send(error)
-    }
+  const page = parseInt(req.query.page) - 1 || 0
+  const skipPerPage = 16 * page
+
+
+  try {
+      const allQuizzes = await Quiz.find().skip(skipPerPage).limit(16).exec()
+      const dataToSend = allQuizzes.map((item) => {
+        const {_id, title, createdBy} = item
+        return {_id, title, createdBy}
+      })
+      res.status(200).send(dataToSend)
+  } catch (error) {
+      res.status(500).send(error)
+  }
     
 })
 
@@ -34,9 +38,24 @@ router.get('/quiz/:id', async (req, res) => {
 })
 
 
+function checkCredentials(req, res, next) {
+  if (!req.session.user) {
+    res.status(401).send({message: 'unauthorized'})
+    return
+  }
+  if (req.body.authorId !== req.session.user.id) {
+    res.status(401).send({message: 'unauthorized'})
+    return
+  }
+  
+  next()
+}
 
-router.post('/', async (req, res) => {
+router.post('/', checkCredentials ,async (req, res) => {
     const quiz = new Quiz(req.body)
+
+    
+    
     try {
         await Quiz.create(quiz) 
         res.status(201).send(quiz)

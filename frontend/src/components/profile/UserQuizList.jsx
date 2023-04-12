@@ -9,7 +9,7 @@ import { useGlobalContext } from "../../context/UserContext";
 import QuizModal from "./QuizModal";
 import DeleteModal from "./DeleteModal";
 
-function UserQuizList({userQuiz, setUserQuiz, fetchData}) {
+function UserQuizList({userQuiz, setUserQuiz, fetchUserData}) {
   const [ showQuizModal, setShowQuizModal] = useState(false)
   const [ quizModalData, setQuizModalData ] = useState({})
   const [ showDeleteModal, setShowDeleteModal ] = useState(false)
@@ -121,7 +121,7 @@ function UserQuizList({userQuiz, setUserQuiz, fetchData}) {
         deleteQuizId={deleteQuizId}
         setQuizDeleteId={setQuizDeleteId}
         deleteRef={deleteRef}
-        fetchData={fetchData}
+        fetchUserData={fetchUserData}
     />}
     </>
   )
