@@ -5,6 +5,32 @@ const { hashPassword, comparePassword } = require('../../../lib/utils/helper')
 
 const router = Router()
 
+router.get('/session', async (req, res) => {
+  try {
+    if (req.session.user) {
+      const userId = req.session.user.id
+      const user = await User.findById(userId, {firstName: 1, lastName: 1, email: 1, _id: 1})
+      const { firstName, lastName, email, _id } = user
+      res.status(200).send({
+        session: true,
+        user: {
+          firstName,
+          lastName,
+          email,
+          id: _id
+        }
+      })
+
+    } else {
+      res.status(200).send({session: false})
+    }
+  } catch (error) {
+    res.status(500).send(error)
+  }
+  
+})
+
+
 router.post('/signup', async (req, res) => {
   if (req.body.password !== req.body.confirmPass) {
    res.status(401).send({message: 'password does not match'})
@@ -37,7 +63,7 @@ router.post('/signin', async (req, res) => {
   const user = await User.findOne({email: req.body.email})
   const passwordMatched = comparePassword(req.body.password, user.password)
   if (passwordMatched) {
-    const { firstName, lastName, email, _id } = user
+    const { _id, firstName, lastName, email } = user
 
     if (!req.session.user) {
       req.session.user = {
@@ -87,6 +113,8 @@ router.get('/signout', async (req, res) => {
 
 
 })
+
+
 
 
 module.exports = router

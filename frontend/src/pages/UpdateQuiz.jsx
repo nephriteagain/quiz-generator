@@ -12,7 +12,7 @@ import { BsCheckCircleFill} from 'react-icons/bs'
 
 
 export default function UpdateQuiz() {
-  const { quizToUpdate, setQuizToUpdate, user } = useGlobalContext()
+  const { quizToUpdate, setQuizToUpdate, user, fetchData } = useGlobalContext()
 
   const [ title, setTitle ] = useState(quizToUpdate.title)
   const [ questions, setQuestions] = useState(quizToUpdate.questions)
@@ -30,6 +30,7 @@ export default function UpdateQuiz() {
         .then((res) => {
           navigate('/profile/:profileId')
           setQuizToUpdate(res.data)
+          fetchData()
         })
         .catch((err) => console.log(err))
     }

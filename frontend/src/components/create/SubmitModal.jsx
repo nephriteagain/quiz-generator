@@ -1,21 +1,25 @@
-import { useRef } from "react"
 import axios from "axios"
+
+import { useGlobalContext } from "../../context/UserContext"
 
 
 
 function SubmitModal({formData, setFormData ,setShowSubmitModal, bgModalHeight}) {
+  console.log(formData, 'formdata')
+  const { fetchData, fetchQuizList } = useGlobalContext()
 
-  const windowRef = useRef()
 
   function submitData() {
+
     axios.post(`http://localhost:3000/api/v1/`, formData)
       .then((res) => {
         console.log(res.data)
         const title = document.querySelector('.title')
-
         title.value = ''
-
+        
         setFormData({})
+        fetchData()
+        fetchQuizList()
       })
       .catch((err) => console.log(err))
       setShowSubmitModal(false)

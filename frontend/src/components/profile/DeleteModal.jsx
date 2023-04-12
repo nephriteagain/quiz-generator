@@ -1,6 +1,7 @@
 import { useEffect, useRef  } from 'react'
 import axios from 'axios'
 
+
 import { BsCheck2 } from 'react-icons/bs'
 import { RxCross2 } from 'react-icons/rx'
 
@@ -31,6 +32,9 @@ export default function DeleteModal({setShowDeleteModal, deleteQuizId, deleteRef
 
   useEffect(() => {
     window.addEventListener('resize', () => {
+      setShowDeleteModal(false)
+    })
+    window.addEventListener('scroll', () => {
       setShowDeleteModal(false)
     })
   }, [])

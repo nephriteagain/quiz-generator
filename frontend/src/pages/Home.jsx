@@ -9,6 +9,7 @@ function Home({quizList, setQuizList}) {
 
   const { user } = useGlobalContext()
 
+  
   return (
       <>
       <header className="text-5xl mb-14 mt-16 mx-auto text-center font-bold w-fit bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent">

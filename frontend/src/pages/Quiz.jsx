@@ -16,7 +16,7 @@ function Quiz({quizList}) {
     const match = url.match(regex);
     const captureString = match[1];
 
-    axios.get(`http://localhost:3000/api/v1/quiz/${captureString}`)
+    axios.get(`http://localhost:3000/api/v1/quiz/${captureString}`, {withCredentials: true})
       .then(response => {
         let data = response.data
 

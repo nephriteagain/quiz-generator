@@ -1,5 +1,5 @@
 import {BrowserRouter as Router, Routes, Route, useParams} from 'react-router-dom'
-import { useState } from 'react'
+
 import { useGlobalContext } from './context/UserContext'
 
 import Version from './components/Version'
@@ -15,9 +15,8 @@ import Error from './pages/Error'
 import './App.css'
 
 function App() {
-  const [quizList, setQuizList] = useState([])
 
-  const { user } = useGlobalContext()
+  const { user, quizList, setQuizList } = useGlobalContext()
   let { quizId, profileId, editQuizId } = useParams()
   
 

@@ -16,11 +16,13 @@ function Create() {
   const [ showSubmitModal, setShowSubmitModal ] = useState(false)
   const [ bgModalHeight , setBgModalHeight ]  = useState(window.innerHeight)
 
-
-
 useEffect(() => {
   window.onresize = () => {
-    const pageHeight = pageRef.current.getBoundingClientRect().height
+    const pageHeight = document.body.scrollHeight
+    setBgModalHeight(pageHeight)
+  }
+  window.onscroll = () => {
+    const pageHeight = document.body.scrollHeight    
     setBgModalHeight(pageHeight)
   }
 },[])
