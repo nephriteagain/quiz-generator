@@ -21,7 +21,7 @@ function QuestionList({formData, setFormData}) {
 
 
   return (
-    <div className="md:basis-1/2 mt-16 bg-stone-200 rounded-xl drop-shadow-xl shadow-lg px-4 py-2">
+    <div className="md:basis-1/2 mt-16 bg-stone-200 rounded-xl drop-shadow-xl shadow-lg px-4 py-2 overflow-x-hidden">
       <h1 className="font-bold mb-8 mt-2 text-3xl text-center">
         Preview
       </h1>

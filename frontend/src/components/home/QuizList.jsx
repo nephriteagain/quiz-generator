@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef  } from 'react'
 import { Link } from 'react-router-dom'
 import { useGlobalContext } from '../../context/UserContext'
 
@@ -7,7 +7,7 @@ import { paginationButtonStyle } from '../../lib/helper/paginationStyle'
 
 import LoadingQuizList from './LoadingQuizList'
 
-export default function QuizList({quizList,}) {
+export default function QuizList({quizList}) {
 
   
   const { fetchQuizList, setQuizPage, showLoadingComponent } = useGlobalContext()
@@ -27,7 +27,26 @@ export default function QuizList({quizList,}) {
       })
   }
 
+  useEffect(() => {
+    const titleQuiz = document.querySelectorAll('.quiz-title')
+    titleQuiz.forEach((quiz) => {
+      const quizText = quiz.textContent
+      if (quizText.length > 30) {
+        quiz.style.fontSize = '0.7rem'
+      }
+      else if (quizText.length > 25) {
+        quiz.style.fontSize = '0.8rem'
+      }
+      else if (quizText.length > 22) {
+        quiz.style.fontSize = '0.9rem'
+      }
+      else if (quizText.length > 19) {
+        quiz.style.fontSize = '1rem'
+      }
 
+    })
+
+  }, [quizList]) 
 
   useEffect(() => {
     paginationButtonStyle(1)
@@ -46,7 +65,7 @@ export default function QuizList({quizList,}) {
         const { title, createdBy, _id } = quiz
         return (
           <div key={index} className='container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100 overflow-hidden max-w-[300px] mx-auto aspect-[1.6/1]'>
-            <h3 className='text-xl font-semibold mb-1 whitespace-nowrap'>
+            <h3 className='text-xl font-semibold mb-1 whitespace-nowrap quiz-title'>
               {title}
             </h3>
             <p className='text-sm ms-1 mb-3 opacity-80 whitespace-nowrap'>
