@@ -14,6 +14,7 @@ export const GlobalProvider = ({children}) => {
   const [ quizPage, setQuizPage ] = useState(1)
   const [ searchText, setSearchText ] = useState('')
   const [cancelTokenSource, setCancelTokenSource] = useState(null)
+  const [ showLoadingComponent, setShowLoadingComponent ] = useState(false)
   
 
   async function fetchUserData () {
@@ -39,15 +40,18 @@ export const GlobalProvider = ({children}) => {
     const source = axios.CancelToken.source()
     setCancelTokenSource(source)
 
+    setShowLoadingComponent(true)
     await axios.get(`http://localhost:3000/api/v1/?page=${page}&date=${date}&title=${title}`, {
       withCredentials: true,
       cancelToken: source.token
     })
       .then((response) => {
         setQuizList(response.data)
+        setShowLoadingComponent(false)
       })
       .catch((err) => {
         console.log('cancelled')
+        setShowLoadingComponent(false)
       })
   }
 
@@ -103,7 +107,8 @@ export const GlobalProvider = ({children}) => {
         quizPage,
         setQuizPage,
         searchText,
-        setSearchText
+        setSearchText,
+        showLoadingComponent
       }}
     >
       {children}

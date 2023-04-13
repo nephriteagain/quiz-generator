@@ -5,10 +5,13 @@ import { useGlobalContext } from '../../context/UserContext'
 
 import { paginationButtonStyle } from '../../lib/helper/paginationStyle'
 
+import LoadingQuizList from './LoadingQuizList'
 
 export default function QuizList({quizList,}) {
 
-  const { fetchQuizList, setQuizPage } = useGlobalContext()
+  
+  const { fetchQuizList, setQuizPage, showLoadingComponent } = useGlobalContext()
+  
 
   async function backToPageOne() {
     await fetchQuizList(1)
@@ -30,7 +33,9 @@ export default function QuizList({quizList,}) {
     paginationButtonStyle(1)
   }, [])
 
-
+  if (showLoadingComponent) return (
+    <LoadingQuizList />
+  )
 
   return (
     <section className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mt-6'>
@@ -40,7 +45,7 @@ export default function QuizList({quizList,}) {
       quizList.map((quiz, index) => {
         const { title, createdBy, _id } = quiz
         return (
-          <div key={index} className='container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100 overflow-hidden max-w-[300px] mx-auto'>
+          <div key={index} className='container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100 overflow-hidden max-w-[300px] mx-auto aspect-[1.6/1]'>
             <h3 className='text-xl font-semibold mb-1 whitespace-nowrap'>
               {title}
             </h3>
