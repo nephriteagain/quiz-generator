@@ -47,7 +47,7 @@ export const GlobalProvider = ({children}) => {
         setQuizList(response.data)
       })
       .catch((err) => {
-        console.log(err)
+        console.log('cancelled')
       })
   }
 

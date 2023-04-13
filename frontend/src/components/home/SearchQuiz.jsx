@@ -35,8 +35,9 @@ function SearchQuiz() {
       >
         <FiSearch className='inline me-3 text-xl hover:scale-110 transition-all duration-100'/>
       </label>
-      <input className='rounded-md px-2 py-1 text-sm shadow-inner shadow-stone-400 drop-shadow-md focus:bg-blue-100'
+      <input className='rounded-md px-2 py-1 text-sm shadow-inner shadow-stone-400 drop-shadow-md focus:bg-blue-100 search-input'
         name='search'
+        value={searchText}
         onChange={(e) => setSearchText(e.currentTarget.value)}
       />
     </section>

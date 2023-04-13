@@ -5,11 +5,12 @@ const Quiz = require('../../db/Schema/QuizSchema')
 const router = Router()
 
 router.get('/', async (req, res) => {
-  const page = parseInt(req.query.page - 1) || 0
-  const title = req.query?.title
+  const title = req.query.title || ""
+  const pageToSkip = parseInt(req.query.page - 1) || 0
 
   const sortByDate = req.query.date ? {createdAt: req.query.date} : {createdAt: -1}
-  const skipPerPage = 16 * page
+  const skipPerPage = 16 * pageToSkip
+  const itemLimit = 12
 
   if (!title) {
     try {
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
       .find()
       .sort(sortByDate)
       .skip(skipPerPage)
-      .limit(16)
+      .limit(itemLimit)
       .exec()
 
       const dataToSend = allQuizzes.map((item) => {
@@ -37,7 +38,7 @@ router.get('/', async (req, res) => {
       .find({title: titleRegex})
       .sort({title: 1})
       .skip(skipPerPage)
-      .limit(16)
+      .limit(itemLimit)
       .exec()
 
       const dataToSend = titleSearchedQuiz.map((item) => {
@@ -53,55 +54,6 @@ router.get('/', async (req, res) => {
     
 })
 
-router.get('/search', async (req, res) => {
-  const page = parseInt(req.query.page - 1) || 0
-  const title = req.query?.title
-
-  const sortByDate = req.query.date ? {createdAt: req.query.date} : {createdAt: -1}
-  const skipPerPage = 16 * page
-  console.log(title, 'title')
-  if (!title) {
-    try {
-      const allQuizzes = await Quiz
-      .find()
-      .sort(sortByDate)
-      .skip(skipPerPage)
-      .limit(16)
-      .exec()
-
-      const dataToSend = allQuizzes.map((item) => {
-        const {_id, title, createdBy} = item
-        return {_id, title, createdBy}
-      })
-      res.status(200).send(dataToSend)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-    
-  } else {
-    const titleRegex = new RegExp(title, 'gi');
-
-    try {
-      const titleSearchedQuiz = await Quiz
-      .find({title: titleRegex})
-      .sort({title: 1})
-      .skip(skipPerPage)
-      .limit(16)
-      .exec()
-
-      const dataToSend = titleSearchedQuiz.map((item) => {
-        const {_id, title, createdBy} = item
-        return {_id, title, createdBy}
-      })
-      res.status(200).send(dataToSend)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-    
-  }
-  
-
-})
 
 
 

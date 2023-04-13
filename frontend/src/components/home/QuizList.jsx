@@ -6,15 +6,18 @@ import { useGlobalContext } from '../../context/UserContext'
 import { paginationButtonStyle } from '../../lib/helper/paginationStyle'
 
 
-export default function QuizList({quizList, setQuizList}) {
+export default function QuizList({quizList,}) {
 
-  const { fetchQuizList } = useGlobalContext()
+  const { fetchQuizList, setQuizPage } = useGlobalContext()
 
   async function backToPageOne() {
     await fetchQuizList(1)
       .then(res => {
         paginationButtonStyle(1)
         setQuizPage(1)
+
+        // const searchInput = document.querySelector('.search-input')
+        // searchInput.value = ''
       })
       .catch(err => {
         console.log(err)
