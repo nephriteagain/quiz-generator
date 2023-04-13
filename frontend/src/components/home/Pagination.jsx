@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { IoIosArrowForward, IoIosArrowBack } from 'react-icons/io'
 
@@ -8,14 +8,20 @@ import { paginationButtonStyle } from '../../lib/helper/paginationStyle'
 
 function Pagination() {
   const [ pageNums, setPageNums ] = useState([1,2,3,4,5])
-  
+
+
   const { fetchQuizList, quizPage, setQuizPage } = useGlobalContext()
 
-  async function quizPagination(pageIndex) {
+  const dateRef = useRef(null)
+
+  async function quizPagination(pageIndex, e) {
 
     const page = pageNums.find((page, index) => {
       return index === pageIndex
     })
+    
+
+    // make sort
 
     await fetchQuizList(page)
       .then((res) => {
@@ -48,7 +54,8 @@ function Pagination() {
 
 
   return (
-    <div>
+    <div className='flex'>
+    <div className='me-auto'>
     {
       pageNums.map((page,index) => {
         return (
@@ -73,8 +80,9 @@ function Pagination() {
       onClick={() => incrementPageFinder(true)}
     >
       <IoIosArrowForward className='mx-auto'/>
-    </button>
+    </button>    
   </div>
+    </div>
   )
 }
 

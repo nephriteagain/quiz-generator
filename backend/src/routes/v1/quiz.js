@@ -5,12 +5,19 @@ const Quiz = require('../../db/Schema/QuizSchema')
 const router = Router()
 
 router.get('/', async (req, res) => {
-  const page = parseInt(req.query.page) - 1 || 0
+  const page = parseInt(req.query.page - 1) || 0
+  const sortByDate = req.query.date ? {createdAt: req.query.date} : {createdAt: -1}
   const skipPerPage = 16 * page
 
 
   try {
-      const allQuizzes = await Quiz.find().skip(skipPerPage).limit(16).exec()
+      const allQuizzes = await Quiz
+      .find()
+      .sort(sortByDate)
+      .skip(skipPerPage)
+      .limit(16)
+      .exec()
+
       const dataToSend = allQuizzes.map((item) => {
         const {_id, title, createdBy} = item
         return {_id, title, createdBy}

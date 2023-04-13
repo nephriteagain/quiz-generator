@@ -21,9 +21,10 @@ export const GlobalProvider = ({children}) => {
       })
   }
   
-  async function fetchQuizList(page) {
-    
-    await axios.get(`http://localhost:3000/api/v1/?page=${page}`, {withCredentials: true})
+  async function fetchQuizList(page, sortByDate) {
+    const date = sortByDate || -1
+
+    await axios.get(`http://localhost:3000/api/v1/?page=${page}&date=${date}`, {withCredentials: true})
       .then((response) => {
         setQuizList(response.data)
       })
