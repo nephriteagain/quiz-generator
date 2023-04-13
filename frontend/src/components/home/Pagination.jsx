@@ -14,7 +14,7 @@ function Pagination() {
 
   const dateRef = useRef(null)
 
-  async function quizPagination(pageIndex, e) {
+  async function quizPagination(pageIndex) {
 
     const page = pageNums.find((page, index) => {
       return index === pageIndex
@@ -59,7 +59,7 @@ function Pagination() {
     {
       pageNums.map((page,index) => {
         return (
-          <button className='w-8 h-8 bg-green-400 mx-2 rounded-md shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 pagination-button'
+          <button className='w-8 h-8 bg-green-400 me-4 rounded-md shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 pagination-button'
             key={page}
             onClick={() => quizPagination(index)}
           >

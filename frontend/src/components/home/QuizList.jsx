@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useGlobalContext } from '../../context/UserContext'
 
 
 import { paginationButtonStyle } from '../../lib/helper/paginationStyle'
@@ -7,9 +8,18 @@ import { paginationButtonStyle } from '../../lib/helper/paginationStyle'
 
 export default function QuizList({quizList, setQuizList}) {
 
+  const { fetchQuizList } = useGlobalContext()
 
-
-  
+  async function backToPageOne() {
+    await fetchQuizList(1)
+      .then(res => {
+        paginationButtonStyle(1)
+        setQuizPage(1)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
 
 
@@ -22,7 +32,8 @@ export default function QuizList({quizList, setQuizList}) {
   return (
     <section className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mt-6'>
     
-    {
+    { quizList.length > 0 ?
+
       quizList.map((quiz, index) => {
         const { title, createdBy, _id } = quiz
         return (
@@ -41,7 +52,18 @@ export default function QuizList({quizList, setQuizList}) {
             <br/>
           </div>
         )
-      })
+      }) :
+
+      <div className='mt-4'>
+        <p className='text-xl font-bold mb-2'>
+          No More Results...  
+        </p>
+        <button className='bg-orange-200 rounded-md px-2 py-1 drop-shadow-md shadow-md hover:scale-105 active:scale-95 transition-all duration-100'
+          onClick={backToPageOne}
+        >
+          Back to Page 1
+        </button>
+      </div>
     }
   </section>
 
