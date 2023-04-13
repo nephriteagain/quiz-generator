@@ -4,6 +4,7 @@ import QuizList from "../components/home/QuizList"
 import CreateQuiz from "../components/home/CreateQuiz"
 import Login from "../components/home/Login"
 import Welcome from "../components/home/Welcome"
+import Pagination from "../components/home/Pagination"
 
 function Home({quizList, setQuizList}) {
 
@@ -17,6 +18,7 @@ function Home({quizList, setQuizList}) {
       </header>
       <Login/>
       { user && <CreateQuiz /> }
+      <Pagination />
       <QuizList quizList={quizList} setQuizList={setQuizList}/>
       <Welcome />
       </>

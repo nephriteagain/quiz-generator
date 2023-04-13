@@ -9,9 +9,9 @@ function SubmitModal({formData, setFormData ,setShowSubmitModal, bgModalHeight})
   const { fetchUserData, fetchQuizList, setQuizPage } = useGlobalContext()
 
 
-  function submitData() {
+  async function submitData() {
 
-    axios.post(`http://localhost:3000/api/v1/`, formData)
+    await axios.post(`http://localhost:3000/api/v1/`, formData)
       .then((res) => {
         console.log(res.data)
         const title = document.querySelector('.title')
@@ -20,7 +20,10 @@ function SubmitModal({formData, setFormData ,setShowSubmitModal, bgModalHeight})
         setFormData({})
         fetchUserData()
         fetchQuizList(1)
-        setQuizPage(1)
+          .then(res => {
+            setQuizPage(1)
+          })
+          .catch(err => console.log(err))
       })
       .catch((err) => console.log(err))
       setShowSubmitModal(false)
