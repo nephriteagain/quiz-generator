@@ -5,6 +5,7 @@ import CreateQuiz from "../components/home/CreateQuiz"
 import Login from "../components/home/Login"
 import Welcome from "../components/home/Welcome"
 import Pagination from "../components/home/Pagination"
+import SearchQuiz from "../components/home/SearchQuiz"
 
 function Home({quizList, setQuizList}) {
 
@@ -19,6 +20,7 @@ function Home({quizList, setQuizList}) {
       <Login/>
       { user && <CreateQuiz /> }
       <Pagination />
+      <SearchQuiz setQuizList={setQuizList}/>
       <QuizList quizList={quizList} setQuizList={setQuizList}/>
       <Welcome />
       </>

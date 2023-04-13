@@ -7,7 +7,7 @@ import { paginationButtonStyle } from '../../lib/helper/paginationStyle'
 
 
 function Pagination() {
-  const [ pageNums, setPageNums ] = useState([1,2,3,4,5])
+  const [ pageNums, setPageNums, searchText ] = useState([1,2,3,4,5])
 
 
   const { fetchQuizList, quizPage, setQuizPage } = useGlobalContext()
@@ -61,7 +61,7 @@ function Pagination() {
         return (
           <button className='w-8 h-8 bg-green-400 me-4 rounded-md shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 pagination-button'
             key={page}
-            onClick={() => quizPagination(index)}
+            onClick={() => quizPagination(index, null, searchText)}
           >
             {page}
           </button>

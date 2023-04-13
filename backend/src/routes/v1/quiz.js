@@ -6,11 +6,13 @@ const router = Router()
 
 router.get('/', async (req, res) => {
   const page = parseInt(req.query.page - 1) || 0
+  const title = req.query?.title
+
   const sortByDate = req.query.date ? {createdAt: req.query.date} : {createdAt: -1}
   const skipPerPage = 16 * page
 
-
-  try {
+  if (!title) {
+    try {
       const allQuizzes = await Quiz
       .find()
       .sort(sortByDate)
@@ -23,11 +25,84 @@ router.get('/', async (req, res) => {
         return {_id, title, createdBy}
       })
       res.status(200).send(dataToSend)
-  } catch (error) {
+    } catch (error) {
       res.status(500).send(error)
+    }
+    
+  } else {
+    const titleRegex = new RegExp(title, 'gi');
+
+    try {
+      const titleSearchedQuiz = await Quiz
+      .find({title: titleRegex})
+      .sort({title: 1})
+      .skip(skipPerPage)
+      .limit(16)
+      .exec()
+
+      const dataToSend = titleSearchedQuiz.map((item) => {
+        const {_id, title, createdBy} = item
+        return {_id, title, createdBy}
+      })
+      res.status(200).send(dataToSend)
+    } catch (error) {
+      res.status(500).send(error)
+    }
+    
   }
     
 })
+
+router.get('/search', async (req, res) => {
+  const page = parseInt(req.query.page - 1) || 0
+  const title = req.query?.title
+
+  const sortByDate = req.query.date ? {createdAt: req.query.date} : {createdAt: -1}
+  const skipPerPage = 16 * page
+  console.log(title, 'title')
+  if (!title) {
+    try {
+      const allQuizzes = await Quiz
+      .find()
+      .sort(sortByDate)
+      .skip(skipPerPage)
+      .limit(16)
+      .exec()
+
+      const dataToSend = allQuizzes.map((item) => {
+        const {_id, title, createdBy} = item
+        return {_id, title, createdBy}
+      })
+      res.status(200).send(dataToSend)
+    } catch (error) {
+      res.status(500).send(error)
+    }
+    
+  } else {
+    const titleRegex = new RegExp(title, 'gi');
+
+    try {
+      const titleSearchedQuiz = await Quiz
+      .find({title: titleRegex})
+      .sort({title: 1})
+      .skip(skipPerPage)
+      .limit(16)
+      .exec()
+
+      const dataToSend = titleSearchedQuiz.map((item) => {
+        const {_id, title, createdBy} = item
+        return {_id, title, createdBy}
+      })
+      res.status(200).send(dataToSend)
+    } catch (error) {
+      res.status(500).send(error)
+    }
+    
+  }
+  
+
+})
+
 
 
 router.get('/quiz/:id', async (req, res) => {
@@ -57,6 +132,8 @@ function checkCredentials(req, res, next) {
   
   next()
 }
+
+
 
 router.post('/', checkCredentials ,async (req, res) => {
     const quiz = new Quiz(req.body)
@@ -157,5 +234,7 @@ router.post('/update/:id', async(req, res) => {
     })
     .catch(err => res.status(500).send(err))
 })
+
+
 
 module.exports = router

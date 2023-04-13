@@ -3,12 +3,17 @@ import axios from "axios";
 
 const GlobalContext = createContext()
 
+
 export const GlobalProvider = ({children}) => {
   const [ user, setUser ] = useState(null)
   const [ quizToUpdate, setQuizToUpdate] = useState({})
   const [ userQuiz, setUserQuiz ] = useState([])
   const [ quizList, setQuizList] = useState([])
+  
+  // fetch state
   const [ quizPage, setQuizPage ] = useState(1)
+  const [ searchText, setSearchText ] = useState('')
+  const [cancelTokenSource, setCancelTokenSource] = useState(null)
   
 
   async function fetchUserData () {
@@ -21,10 +26,23 @@ export const GlobalProvider = ({children}) => {
       })
   }
   
-  async function fetchQuizList(page, sortByDate) {
+  async function fetchQuizList(page, sortByDate, sortByTitle) {
     const date = sortByDate || -1
+    const title = sortByTitle || ''
 
-    await axios.get(`http://localhost:3000/api/v1/?page=${page}&date=${date}`, {withCredentials: true})
+    // Cancel previous request
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel()
+    }
+
+    // Create new CancelToken source
+    const source = axios.CancelToken.source()
+    setCancelTokenSource(source)
+
+    await axios.get(`http://localhost:3000/api/v1/?page=${page}&date=${date}&title=${title}`, {
+      withCredentials: true,
+      cancelToken: source.token
+    })
       .then((response) => {
         setQuizList(response.data)
       })
@@ -37,6 +55,15 @@ export const GlobalProvider = ({children}) => {
   useEffect(() => {
     fetchQuizList(1)
   }, [])
+
+  useEffect(() => {
+    return () => {
+      // Cancel request on unmount
+      if (cancelTokenSource) {
+        cancelTokenSource.cancel()
+      }
+    }
+  }, [cancelTokenSource])
 
 
   useEffect(() => {
@@ -74,7 +101,9 @@ export const GlobalProvider = ({children}) => {
         setQuizList,
         fetchQuizList,
         quizPage,
-        setQuizPage
+        setQuizPage,
+        searchText,
+        setSearchText
       }}
     >
       {children}
