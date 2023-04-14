@@ -17,12 +17,15 @@ function SearchQuiz() {
   }
 
   useEffect(() => {
-    if (searchCriteria === 'title') {
-      fetchQuizList(quizPage, null, searchText)
-    }
-    if (searchCriteria === 'author') {
-      fetchQuizList(quizPage, null, null, searchText)
-    }
+    const fetch =  setTimeout(() => {
+      if (searchCriteria === 'title') {
+        fetchQuizList(quizPage, null, searchText)
+      }
+      if (searchCriteria === 'author') {
+        fetchQuizList(quizPage, null, null, searchText)
+      }
+    }, 200)
+    return () => clearTimeout(fetch)
 
   }, [searchText, searchCriteria])
 
@@ -33,7 +36,7 @@ function SearchQuiz() {
         sorted by:
       </p>
       <select onChange={(e) => switchSearchCriteria(e)}        
-        className='px-2 py-[0.33rem] text-sm me-4 rounded-md shadow-md drop-shadow-sm shadow-stone-300 bg-orange-100 transition-all duration-100'        
+        className='px-2 py-[0.33rem] text-sm me-4 rounded-md shadow-md drop-shadow-sm shadow-stone-300 bg-orange-100  hover:bg-orange-200 transition-all duration-100'        
       >
         <option value='title' 
           className='px-2 py-1 text-sm transition-all duration-100'
