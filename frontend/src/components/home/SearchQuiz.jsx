@@ -7,30 +7,38 @@ import { FiSearch } from 'react-icons/fi'
 
 function SearchQuiz() {
 
-
-  const [cancelTokenSource, setCancelTokenSource] = useState(null)
-
+  const [ searchCriteria, setSearchCriteria ] = useState('title')
 
   const { quizPage, fetchQuizList, searchText, setSearchText } = useGlobalContext()
 
+  function switchSearchCriteria(e) {
+    const criteria = e.currentTarget.value
+    setSearchCriteria(criteria)
+  }
 
   useEffect(() => {
-
-    fetchQuizList(quizPage, null, searchText)
-
-  }, [searchText])
-
-  useEffect(() => {
-    return () => {
-      // Cancel request on unmount
-      if (cancelTokenSource) {
-        cancelTokenSource.cancel()
-      }
+    if (searchCriteria === 'title') {
+      fetchQuizList(quizPage, null, searchText)
     }
-  }, [cancelTokenSource])
+    if (searchCriteria === 'author') {
+      fetchQuizList(quizPage, null, null, searchText)
+    }
+
+  }, [searchText, searchCriteria])
+
 
   return (
     <section className='mt-6 mb-12 text-sm'>
+      <p>sorted by:</p>
+      <select onChange={(e) => switchSearchCriteria(e)}>
+        <option value='title'>
+          title
+        </option>
+        <option value='author'>
+          author
+        </option>
+      </select>
+
       <label htmlFor='search'
       >
         <FiSearch className='inline me-3 text-xl hover:scale-110 transition-all duration-100'/>

@@ -27,9 +27,10 @@ export const GlobalProvider = ({children}) => {
       })
   }
   
-  async function fetchQuizList(page, sortByDate, sortByTitle) {
+  async function fetchQuizList(page, sortByDate, sortByTitle, sortByAuthor) {
     const date = sortByDate || -1
     const title = sortByTitle || ''
+    const author = sortByAuthor || ''
 
     // Cancel previous request
     if (cancelTokenSource) {
@@ -41,7 +42,7 @@ export const GlobalProvider = ({children}) => {
     setCancelTokenSource(source)
 
     setShowLoadingComponent(true)
-    await axios.get(`http://localhost:3000/api/v1/?page=${page}&date=${date}&title=${title}`, {
+    await axios.get(`http://localhost:3000/api/v1/?page=${page}&date=${date}&title=${title}&author=${author}`, {
       withCredentials: true,
       cancelToken: source.token
     })
