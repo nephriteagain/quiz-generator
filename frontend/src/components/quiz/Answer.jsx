@@ -4,6 +4,7 @@ import {AiOutlineCheck} from 'react-icons/ai'
 import {RxCross2} from 'react-icons/rx'
 import {GrRadialSelected, GrRadial} from 'react-icons/gr'
 
+
 import lowerRoman from "../../lib/data/lowerRoman"
 
 
@@ -13,6 +14,7 @@ function Answer({data, setData}) {
   const [ showResult, setShowResult ] = useState(false)
   const [ result, setResult ] = useState({})
   const [ score, setScore ] = useState({score: 0, total: 0})
+  
   
 
   function handleSubmit(e) {
@@ -62,9 +64,11 @@ function Answer({data, setData}) {
     setScore({score: 0, total: 0})
   }
 
+
+
   if (!showResult) return (
     <form onSubmit={handleSubmit} className="container mt-10 mb-8 bg-stone-200 rounded-xl drop-shadow-xl shadow-xl px-6 py-6 max-w-[600px] mx-auto">
-      <h2 className="text-2xl font-semibold mb-1">
+      <h2 className="text-xl font-semibold mb-1 overflow-hidden">
         {title}
       </h2>
       <h3 className="text-md ms-1 mb-3 opacity-80">
@@ -79,7 +83,7 @@ function Answer({data, setData}) {
               <div className="text-lg font-semibold">
               {questionText}
               </div>
-              <ol type>
+              <ol>
                 <br />
                 {options?.length && options.map((option, index) => {
                   return (
@@ -119,7 +123,7 @@ function Answer({data, setData}) {
   )
 
   if (showResult) return (
-    <div className="container mt-10 mb-5 bg-stone-200 rounded-xl drop-shadow-xl shadow-xl px-4 py-2 max-w-[800px] mx-auto">
+    <div className="container mt-10 mb-5 bg-stone-200 rounded-xl drop-shadow-xl shadow-xl px-4 py-2 max-w-[600px] mx-auto">
       <h2  className="text-2xl font-semibold mb-1">
         {title}
       </h2>

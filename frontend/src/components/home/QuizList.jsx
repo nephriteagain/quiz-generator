@@ -19,8 +19,6 @@ export default function QuizList({quizList}) {
         paginationButtonStyle(1)
         setQuizPage(1)
 
-        // const searchInput = document.querySelector('.search-input')
-        // searchInput.value = ''
       })
       .catch(err => {
         console.log(err)
