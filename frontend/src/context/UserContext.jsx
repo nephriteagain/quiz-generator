@@ -15,6 +15,8 @@ export const GlobalProvider = ({children}) => {
   const [ searchText, setSearchText ] = useState('')
   const [cancelTokenSource, setCancelTokenSource] = useState(null)
   const [ showLoadingComponent, setShowLoadingComponent ] = useState(false)
+  const [ ascending, setAscending ] = useState('1')
+
   
 
   async function fetchUserData () {
@@ -51,7 +53,6 @@ export const GlobalProvider = ({children}) => {
         setShowLoadingComponent(false)
       })
       .catch((err) => {
-        console.log('cancelled')
         setShowLoadingComponent(false)
       })
   }
@@ -109,7 +110,9 @@ export const GlobalProvider = ({children}) => {
         setQuizPage,
         searchText,
         setSearchText,
-        showLoadingComponent
+        showLoadingComponent,
+        ascending,
+        setAscending
       }}
     >
       {children}

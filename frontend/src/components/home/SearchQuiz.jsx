@@ -9,29 +9,34 @@ function SearchQuiz() {
 
   const [ searchCriteria, setSearchCriteria ] = useState('title')
 
-  const { quizPage, fetchQuizList, searchText, setSearchText } = useGlobalContext()
+  const { quizPage, fetchQuizList, searchText, setSearchText, ascending, setAscending } = useGlobalContext()
 
   function switchSearchCriteria(e) {
     const criteria = e.currentTarget.value
     setSearchCriteria(criteria)
   }
 
+  function switchOrder(e) {
+    const order = e.currentTarget.value
+    setAscending(order)
+  }
+
   useEffect(() => {
     const fetch =  setTimeout(() => {
       if (searchCriteria === 'title') {
-        fetchQuizList(quizPage, null, searchText)
+        fetchQuizList(quizPage, ascending, searchText)
       }
       if (searchCriteria === 'author') {
-        fetchQuizList(quizPage, null, null, searchText)
+        fetchQuizList(quizPage, ascending, null, searchText)
       }
     }, 200)
     return () => clearTimeout(fetch)
 
-  }, [searchText, searchCriteria])
+  }, [searchText, searchCriteria, ascending])
 
 
   return (
-    <section className='mt-6 mb-12 text-sm'>
+    <section className='mt-6 mb-12 text-sm flex flex-row items-center'>
       <p className='inline text-gray-600 text-sm me-2'>
         sorted by:
       </p>
@@ -40,6 +45,7 @@ function SearchQuiz() {
       >
         <option value='title' 
           className='px-2 py-1 text-sm transition-all duration-100'
+          defaultValue
         >
           title
         </option>
@@ -59,6 +65,20 @@ function SearchQuiz() {
         value={searchText}
         onChange={(e) => setSearchText(e.currentTarget.value)}
       />
+      
+      <select onChange={(e) => switchOrder(e)}
+        className='px-2 py-[0.33rem] text-sm ms-auto rounded-md shadow-md drop-shadow-sm shadow-stone-300 bg-orange-100  hover:bg-orange-200 transition-all duration-100'
+      >
+        <option value='1'
+          defaultValue
+        >
+          ascending
+        </option>
+        <option value='-1'
+        >
+          descending
+        </option>
+      </select>
     </section>
   )
 }

@@ -10,11 +10,11 @@ import LoadingQuizList from './LoadingQuizList'
 export default function QuizList({quizList}) {
 
   
-  const { fetchQuizList, setQuizPage, showLoadingComponent } = useGlobalContext()
+  const { fetchQuizList, setQuizPage, showLoadingComponent, ascending } = useGlobalContext()
   
 
   async function backToPageOne() {
-    await fetchQuizList(1)
+    await fetchQuizList(1, ascending)
       .then(res => {
         paginationButtonStyle(1)
         setQuizPage(1)
