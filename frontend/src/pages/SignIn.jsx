@@ -38,25 +38,25 @@ function SignIn() {
 
   return (
     <div className="mx-auto max-w-[500px]">
-      <h1 className="text-4xl font-bold mt-10 mb-16">
+      <h1 className="text-3xl font-bold mt-20 mb-16">
         Login
       </h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="email" className="font-semibold text-lg">
+          <label htmlFor="email" className="font-semibold text-md">
             Email
           </label>
-          <input className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[90%] max-w-[400px] focus:bg-blue-200"
+          <input className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[80%] max-w-[400px] min-w-[250px] focus:bg-blue-200"
             type="email" 
             name='email' 
             required
           />
         </div>
         <div>
-        <label htmlFor="password" className="font-semibold text-lg">
+        <label htmlFor="password" className="font-semibold text-md">
           Password
         </label>
-        <input className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[90%] max-w-[400px] focus:bg-blue-200"
+        <input className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[80%] max-w-[400px] min-w-[250px] focus:bg-blue-200"
           type="password" 
           name="password" 
           required 

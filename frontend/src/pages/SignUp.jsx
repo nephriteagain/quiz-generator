@@ -71,41 +71,41 @@ function SignUp() {
 
   return (
     <div className="mx-auto max-w-[500px]">
-        <h1 className="text-4xl font-bold mt-10 mb-16">
+        <h1 className="text-3xl font-bold mt-10 mb-12">
           Create a New Account
         </h1>
         <form onSubmit={handleSubmit}           
         >
           <div>
-            <label htmlFor="email" className="font-semibold text-lg">
+            <label htmlFor="email" className="font-semibold text-md">
               Email
             </label>
             <input type="email" name="email" required 
-              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[90%] max-w-[400px] focus:bg-blue-200"
+              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[80%] max-w-[400px] min-w-[250px] focus:bg-blue-200"
             />
           </div>
           <div>
-            <label htmlFor="firstName" className="font-semibold text-lg">
+            <label htmlFor="firstName" className="font-semibold text-md">
               First Name
             </label>
             <input type="text" name="firstName" required 
-              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[90%] max-w-[400px] focus:bg-blue-200"
+              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[80%] max-w-[400px] min-w-[250px] focus:bg-blue-200"
             />
           </div>
           <div>
-            <label htmlFor="lastName" className="font-semibold text-lg">
+            <label htmlFor="lastName" className="font-semibold text-md">
               Last Name
             </label>
             <input type="text" name="lastName" required 
-              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[90%] max-w-[400px] focus:bg-blue-200"
+              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[80%] max-w-[400px] focus:bg-blue-200"
             />
           </div>
           <div className="relative">
-            <label htmlFor="password" className="font-semibold text-lg">
+            <label htmlFor="password" className="font-semibold text-md">
               Password
             </label>
             <input 
-              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[90%] max-w-[400px] focus:bg-blue-200 relative"
+              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[80%] max-w-[400px] focus:bg-blue-200 relative"
               type="password" 
               name="password" 
               required
@@ -113,11 +113,11 @@ function SignUp() {
             />
           </div>
           <div className="relative">
-            <label htmlFor="confirmPass" className="font-semibold text-lg">
+            <label htmlFor="confirmPass" className="font-semibold text-md">
               Confirm Password
             </label>
             <input 
-              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[90%] max-w-[400px] focus:bg-blue-200"
+              className="block mt-2 mb-4 shadow-md text-md px-2 py-1 rounded-md w-[80%] max-w-[400px] focus:bg-blue-200"
               type="password" 
               name="confirmPass" 
               required
@@ -127,12 +127,12 @@ function SignUp() {
           </div>
             {
             samePassword ?
-            <div className="text-green-600">
+            <div className="text-green-600 text-sm">
               <AiOutlineCheck className="inline me-4"/>
               Pasword Matched
             </div> :
             <div 
-              className="text-red-600"
+              className="text-red-600 text-sm"
             >
               <RxCross2 className="inline me-4"/>
               Password Don't Matched
@@ -140,12 +140,12 @@ function SignUp() {
           }
           {
             digitBool ?
-            <div className="text-green-600">
+            <div className="text-green-600 text-sm">
               <AiOutlineCheck className="inline me-4"/>
               Pasword Must Be At Least 6 Characters
             </div> :
             <div 
-              className="text-red-600"
+              className="text-red-600 text-sm"
             >
               <RxCross2 className="inline me-4"/>
               Pasword Must Be At Least 6 Characters
@@ -154,12 +154,12 @@ function SignUp() {
           }
           {
             symbolBool ?
-            <div className="text-green-600">
+            <div className="text-green-600 text-sm">
               <AiOutlineCheck className="inline me-4"/>
               Pasword Must Contain Characters A-Z a-z 0-9
             </div> :
             <div 
-              className="text-red-600"
+              className="text-red-600 text-sm"
             >
               <RxCross2 className="inline me-4"/>
               Pasword Must Contain Characters A-Z a-z 0-9              
@@ -168,7 +168,7 @@ function SignUp() {
           {
             !hasNoSpecialSymbolBool &&
             <div 
-              className="text-red-600"
+              className="text-red-600 text-sm"
             >
               <RxCross2 className="inline me-4"/>
               Pasword Must Not Contain a Special Symbol or Whitespace
