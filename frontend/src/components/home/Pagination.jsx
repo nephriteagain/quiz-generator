@@ -59,7 +59,7 @@ function Pagination() {
     {
       pageNums.map((page,index) => {
         return (
-          <button className='w-8 h-8 bg-green-400 me-4 rounded-md shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 pagination-button'
+          <button className='w-8 h-8 bg-green-400 sm:me-4 me-2 rounded-md shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 pagination-button'
             key={page}
             onClick={() => quizPagination(index, null, searchText)}
           >
@@ -71,12 +71,12 @@ function Pagination() {
 
    
     
-    <button className='w-8 h-8 bg-green-400 mx-2 rounded-lg shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 translate-y-[2px] ml-8'
+    <button className='w-8 h-8 bg-green-400 sm:mx-2 mx-1 rounded-lg shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 translate-y-[2px] sm:ml-8 ml-4'
       onClick={() => incrementPageFinder(false)}
     >
       <IoIosArrowBack className='mx-auto' />
     </button>    
-    <button className='w-8 h-8 bg-green-400 mx-2 rounded-lg shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 translate-y-[2px]'
+    <button className='w-8 h-8 bg-green-400 sm:mx-2 mx-1 rounded-lg shadow-md drop-shadow-md hover:scale-105 hover:bg-green-500 active:scale-95 transition-all duration-100 translate-y-[2px]'
       onClick={() => incrementPageFinder(true)}
     >
       <IoIosArrowForward className='mx-auto'/>

@@ -16,7 +16,7 @@ function SignIn() {
 
     const formData = new FormData(e.currentTarget)
     const userData = Object.fromEntries(formData)
-
+    console.log(userData)
 
     axios.post(`http://localhost:3000/api/v1/user/signin`,  userData, {withCredentials: true} )
       .then(res => {

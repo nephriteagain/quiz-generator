@@ -61,6 +61,13 @@ router.post('/signin', async (req, res) => {
     res.status(400).send({message: 'missing credentials'})
   }
   const user = await User.findOne({email: req.body.email})
+
+  // incorrect email
+  if (!user) {
+    res.status(400).send({message: 'incorrect password'})
+    return
+  }
+
   const passwordMatched = comparePassword(req.body.password, user.password)
   if (passwordMatched) {
     const { _id, firstName, lastName, email } = user
@@ -92,7 +99,7 @@ router.post('/signin', async (req, res) => {
     }
     
   } else {
-    res.status(400).send({message: 'incorrect email or password'})
+    res.status(400).send({message: 'incorrect password'})
   }
 })
 

@@ -36,10 +36,20 @@ function SearchQuiz() {
 
 
   return (
-    <section className='mt-6 mb-12 text-sm flex flex-row items-center'>
-      <p className='inline text-gray-600 text-sm me-2'>
-        sorted by:
-      </p>
+    <section className='mt-6 mb-12 text-sm sm:flex sm:flex-row sm:items-center '>
+    
+      <div className='sm:mb-0 mb-4 me-4'>
+        <label htmlFor='search'
+        >
+          <FiSearch className='inline me-3 text-xl hover:scale-110 transition-all duration-100'/>
+        </label>
+        <input className='rounded-md px-2 py-1 text-sm shadow-inner shadow-stone-400 drop-shadow-md focus:bg-blue-100 search-input'
+          name='search'
+          value={searchText}
+          onChange={(e) => setSearchText(e.currentTarget.value)}
+        />
+      </div>
+
       <select onChange={(e) => switchSearchCriteria(e)}        
         className='px-2 py-[0.33rem] text-sm me-4 rounded-md shadow-md drop-shadow-sm shadow-stone-300 bg-orange-100  hover:bg-orange-200 transition-all duration-100'        
       >
@@ -56,18 +66,8 @@ function SearchQuiz() {
         </option>
       </select>
 
-      <label htmlFor='search'
-      >
-        <FiSearch className='inline me-3 text-xl hover:scale-110 transition-all duration-100'/>
-      </label>
-      <input className='rounded-md px-2 py-1 text-sm shadow-inner shadow-stone-400 drop-shadow-md focus:bg-blue-100 search-input'
-        name='search'
-        value={searchText}
-        onChange={(e) => setSearchText(e.currentTarget.value)}
-      />
-      
       <select onChange={(e) => switchOrder(e)}
-        className='px-2 py-[0.33rem] text-sm ms-auto rounded-md shadow-md drop-shadow-sm shadow-stone-300 bg-orange-100  hover:bg-orange-200 transition-all duration-100'
+        className='px-2 py-[0.33rem] text-sm sm:ms-auto sm:mt-0 mt-4 rounded-md shadow-md drop-shadow-sm shadow-stone-300 bg-orange-100  hover:bg-orange-200 transition-all duration-100 sm:imline block'
       >
         <option value='1'
           defaultValue
