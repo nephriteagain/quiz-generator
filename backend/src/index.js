@@ -13,6 +13,9 @@ const app = express()
 const PORT = "3000"
 require('./db/index')
 
+const {rateLimitChecker} = require('../lib/utils/rateLimiter')
+// rate limit
+
 app.use(cors(
   {
     origin: process.env.ClIENT_URI,
@@ -23,6 +26,9 @@ app.use(cors(
 
 app.use(express.json())
 app.use(express.urlencoded())
+
+
+
 app.use(cookieParser())
 app.use(session({
   secret: process.env.SECRET_KEY,
@@ -38,6 +44,10 @@ app.use((req, res, next) => {
   console.log(req.method, req.url, req.query)
   next()
 })
+app.use(rateLimitChecker)
+
+
+
 
 
 app.use("/api/v1", QuizRouter)
