@@ -7,7 +7,7 @@ import AnswerLoading from '../components/quiz/AnswerLoading'
 
 
 
-function Quiz({quizList}) {
+function Quiz() {
   const [data, setData] = useState({})
   const [ showAnswerLoadingComponent, setShowAnswerLoadingComponent ] = useState(true)
 
