@@ -2,7 +2,7 @@ const Rate_Limit = require('../../src/db/Schema/RateLimitSchema')
 
 async function rateLimitChecker(req, res, next) {
 
-r
+
   const ip = req.socket.remoteAddress
 
   // cookie timeout from cookie

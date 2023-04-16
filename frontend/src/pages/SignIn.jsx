@@ -62,6 +62,12 @@ function SignIn() {
           required 
         />
         </div>
+        <p className="text-sm mb-6">
+          <span className="opacity-80">forgot password?</span>
+          <span className="text-blue-800 cursor-pointer"
+            onClick={() => navigate('/user/reset')}
+          > click here</span>
+        </p>
         <div>
           <input className="px-3 py-1 bg-green-300 shadow-md drop-shadow-md rounded-md text-lg font-semibold hover:scale-105 active:scale-95 transition-all duration-75 "
             type="submit"

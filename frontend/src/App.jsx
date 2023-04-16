@@ -10,7 +10,9 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Profile from './pages/Profile'
 import UpdateQuiz from './pages/UpdateQuiz'
+import Reset from './pages/Reset'
 import Error from './pages/Error'
+
 
 import './App.css'
 
@@ -30,6 +32,7 @@ function App() {
         <Route path='/quiz/:quizId' element={<Quiz quizList={quizList}/>}/>
         <Route path='/user/signin' element={<SignIn />} />
         <Route path='/user/signup' element={<SignUp />} />
+        <Route path='/user/reset' element={<Reset />} />
         { user && <Route path='/profile/:profileId' element={<Profile />} /> }
         { user && <Route path='/profile/:profileId/update/:editQuizId' element={<UpdateQuiz />} />}
         <Route path='*' element={<Error />} />
