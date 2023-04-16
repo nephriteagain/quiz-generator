@@ -14,7 +14,6 @@ const PORT = "3000"
 require('./db/index')
 
 const {rateLimitChecker} = require('../lib/utils/rateLimiter')
-// rate limit
 
 app.use(cors(
   {
@@ -44,6 +43,8 @@ app.use((req, res, next) => {
   console.log(req.method, req.url, req.query)
   next()
 })
+
+// rate limit
 app.use(rateLimitChecker)
 
 
