@@ -10,6 +10,10 @@ const PasswordResetSchema = new mongoose.Schema({
     type: String,
     required: true,    
   },
+  email: {
+    type: String,
+    required: true
+  },
   expiresAt: {
     type: Date,
     default: new Date(),

@@ -6,7 +6,7 @@ const nodemailer = require('nodemailer')
 const User = require('../../db/Schema/UserSchema')
 const Password_Reset = require('../../db/Schema/PasswordResetSchema')
 
-const { hashPassword, comparePassword } = require('../../../lib/utils/helper')
+const { hashPassword, comparePassword } = require('../../../lib/utils/loginHelper')
 const { generateCode, generateRandomString } = require('../../../lib/utils/codeGenerator')
 require('dotenv').config()
 
@@ -126,84 +126,6 @@ router.get('/signout', async (req, res) => {
   })
 
 
-})
-
-router.post('/reset', async (req, res) => {
-  if (!req.body?.email) {
-    return res.status(400).send({message: 'provide email address'})
-  }
-  
-  const { email } = req.body  
-  
-    
-    const newCode = generateCode()
-    const codeId = generateRandomString()
-
-    try {
-      
-
-
-      let config = {
-        service: 'gmail',
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.PASSWORD
-        }
-      }
-    
-      let transporter = nodemailer.createTransport(config)
-    
-      let message = {
-        from: process.env.EMAIL,
-        to: email,
-        subject: "quiz generator password reset",
-        html: `<p>password rest code: ${newCode}</p>`
-      }
-    
-
-      const newPassCodeReset = new Password_Reset({code: newCode, codeId: codeId})      
-      // const codeId = await Password_Reset.create(newPassCodeReset)
-
-      if (!req.cookies?.code) {
-        await Promise.all([
-          transporter.sendMail(message),
-          Password_Reset.create(newPassCodeReset)
-        ])
-          .then(() => {
-            res.cookie('code', codeId, {maxAge: 300_000, httpOnly: true})
-            res.status(201).send({message: 'reset code sent to email'})
-            return
-          })
-          .catch((err) => {
-            res.status(500).send({err})
-          })
-      } else {
-        const cookieCodeId = req.cookies.code
-
-        await Promise.all([
-          transporter.sendMail(message),
-          Password_Reset.findOneAndUpdate({codeId: cookieCodeId}, {code: newCode})
-        ])
-        .then(() => {          
-          res.status(201).send({message: 'reset code sent to email'})
-          return
-        })
-        .catch((err) => {
-          res.status(500).send({err})
-        })
-
-      }
-      
-
-
-    } catch (error) {
-      res.status(500).send({error})
-    }
-    
-  
-
-
-    
 })
 
 
