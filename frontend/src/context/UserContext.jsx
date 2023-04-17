@@ -19,6 +19,7 @@ export const GlobalProvider = ({children}) => {
 
   // password reset timer
   const [ timer, setTimer ] = useState(60)
+  const [ showPassResetForm, setShowPassResetForm ] = useState(false)
 
 
   async function fetchUserData () {
@@ -115,8 +116,11 @@ export const GlobalProvider = ({children}) => {
         showLoadingComponent,
         ascending,
         setAscending,
+
         timer,
-        setTimer
+        setTimer,
+        showPassResetForm,
+        setShowPassResetForm
       }}
     >
       {children}

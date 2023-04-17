@@ -4,6 +4,7 @@ const nodemailer = require('nodemailer')
 
 const User = require('../../db/Schema/UserSchema')
 const Password_Reset = require('../../db/Schema/PasswordResetSchema')
+const AuthPassReset = require('../../db/Schema/AuthorizedReset')
 
 const { hashPassword, comparePassword } = require('../../../lib/utils/loginHelper')
 const { generateCode, generateRandomString } = require('../../../lib/utils/codeGenerator')
@@ -119,9 +120,21 @@ router.post('/verify', async (req, res) => {
     if (!requestTicket) {
       res.status(400).send('incorrect credentials')
     } else {
+      const userEmail = requestTicket.email
+
       const codeMatched = comparePassword(code, requestTicket.code)
       if (codeMatched) {
-        res.status(200).send({message: 'code matched'})
+        try {
+          const newAuthPassReset = new AuthPassReset({
+            email: userEmail
+          })
+          AuthPassReset.create(newAuthPassReset)
+  
+          res.status(200).send({message: 'code matched'})
+        } catch (error) {
+          res.status(500).send({error})
+        }
+        
       } else {
         res.status(400).send({message: 'code not matched'})
       }

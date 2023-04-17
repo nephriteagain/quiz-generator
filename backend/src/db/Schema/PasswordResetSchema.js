@@ -17,7 +17,7 @@ const PasswordResetSchema = new mongoose.Schema({
   expiresAt: {
     type: Date,
     default: new Date(),
-    index: { expires: '5m' } // expire documents after 1 minute
+    index: { expires: '5m' } // expire documents after 5 minute
   }
 })
 
