@@ -1,13 +1,27 @@
 const { Router } = require('express')
 const nodemailer = require('nodemailer')
-
+const mongoose = require('mongoose')
 
 const User = require('../../db/Schema/UserSchema')
 const Password_Reset = require('../../db/Schema/PasswordResetSchema')
-const AuthPassReset = require('../../db/Schema/AuthorizedReset')
+const AuthPassReset = require('../../db/Schema/AuthorizedResetSchema')
 
-const { hashPassword, comparePassword } = require('../../../lib/utils/loginHelper')
-const { generateCode, generateRandomString } = require('../../../lib/utils/codeGenerator')
+const { 
+  hashPassword, 
+  comparePassword 
+} = require('../../../lib/utils/loginHelper')
+
+const { 
+  generateCode, 
+  generateRandomString 
+} = require('../../../lib/utils/codeGenerator')
+
+const  {
+  passwordLengthChecker,
+  passwordCharChecker,
+  specialSymbolChecker
+} = require('../../../lib/utils/passwordChecker')
+
 require('dotenv').config()
 
 const router = Router()
@@ -128,9 +142,9 @@ router.post('/verify', async (req, res) => {
           const newAuthPassReset = new AuthPassReset({
             email: userEmail
           })
-          AuthPassReset.create(newAuthPassReset)
-  
-          res.status(200).send({message: 'code matched'})
+          const newPassReset = await AuthPassReset.create(newAuthPassReset)
+          const { _id, email } = newPassReset
+          res.status(200).send({_id, email})
         } catch (error) {
           res.status(500).send({error})
         }
@@ -146,5 +160,58 @@ router.post('/verify', async (req, res) => {
   
 
 })
+
+
+router.post('/confirm', async (req, res) => {
+  if (!req.body?._id) {
+    return res.status(400).send({message: 'bad request'})
+  }
+
+  const id = req.body._id
+  const email = req.body.email
+  const newPassword = req.body.newPassword
+
+  const correctLength = passwordLengthChecker(newPassword)
+  const correctChar = passwordCharChecker(newPassword)
+  const correctSymbol = specialSymbolChecker(newPassword)
+
+  if (!correctLength || !correctChar || !correctSymbol) {
+    return res.status(400).send({message: 'invalid password'})
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).send({message: 'invalid id'})
+  }
+
+  try {
+    
+    const authPassChange = await AuthPassReset.findById(id)
+
+    if (!authPassChange) {
+      res.status(401).send({message: 'incorrect credentials'})
+    }
+    if (email !== authPassChange.email) {
+      res.status(401).send({message: 'email not matched'})
+    }
+
+    const emailOfResetPass = authPassChange.email
+
+    const userReset = await User.findOneAndUpdate(
+      {email: emailOfResetPass},
+      {password: hashPassword(newPassword)}
+      )
+        .then(() => {
+          return res.status(201).send({message: 'password changed successfully'})
+        })
+    
+
+  } catch (error) {
+    res.status(500).send(error)
+  }
+
+
+
+})
+
 
 module.exports = router

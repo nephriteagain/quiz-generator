@@ -11,7 +11,7 @@ export function matchPasswordChecker(password, confirmPass, callback) {
 }
 
 export function passwordLengthChecker(password, callback) {
-  if (password.length > 6) {
+  if (password.length >= 6) {
     callback(true)
   } else {
     callback(false)
@@ -34,13 +34,13 @@ export function passwordCharacterChecker(password, callback) {
       hasNum = true
     }
 
-    if (hasUpper && hasLower && hasNum) {
-      return callback(true)
-    } else {
-      return callback(false)
-    }
-
   })
+  if (hasUpper && hasLower && hasNum) {
+    return callback(true)
+  } else {
+    return callback(false)
+  }
+
 }
 
 export function specialSymbolChecker(password, callback) {
