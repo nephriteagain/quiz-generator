@@ -1,12 +1,25 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 
 import { useGlobalContext } from "../../context/UserContext"
 
+import {
+  matchPasswordChecker,
+  passwordLengthChecker,
+  passwordCharacterChecker,
+  specialSymbolChecker
+} from '../../lib/helper/signUpFormChecker'
+
 export default function SubmitNewPass({_id, email, setShowCodeInput, set_Id, setEmail}) {
   const [ password, setPassword ] = useState('')
   const [ confirmPass, setConfirmPass ] = useState('')
+
+  const [ lengthBool, setLengthBool ] = useState(false)
+  const [  charBool, setCharBool ] = useState(false)
+  const [ symbolBool, setSymbolBool ] = useState(false)
+  const [ matchBool, setMatchBool ] = useState(false)
+
 
   const { setShowPassResetForm } = useGlobalContext()
   
@@ -34,10 +47,20 @@ export default function SubmitNewPass({_id, email, setShowCodeInput, set_Id, set
       .catch(err => {
         console.log(err)
       })
-    
-      
+          
     
   }
+
+  useEffect(() => {
+    matchPasswordChecker(password, confirmPass, setMatchBool)
+    passwordLengthChecker(password, setLengthBool)
+    passwordCharacterChecker(password, setCharBool)
+    specialSymbolChecker(password, setSymbolBool)
+    
+
+  }, [password, confirmPass])
+
+
 
 
   return (
@@ -65,6 +88,7 @@ export default function SubmitNewPass({_id, email, setShowCodeInput, set_Id, set
           className="bg-green-300 rounded-md px-3 py-1 text-sm shadow-md drop-shadow-md cursor-pointer hover:scale-105 active:scale-95 transition-all duration-100"
           />
       </form>
+      
     </div>
   )
 }
