@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const PasswordResetSchema = new mongoose.Schema({
   codeId: {
     type : String,
-    unique: true,
     required: true
   },
   code: {

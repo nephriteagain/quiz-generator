@@ -3,7 +3,6 @@ const mongoose = require('mongoose')
 const AuthPassReset = new mongoose.Schema({
   email: {
     type: String,
-    unique: true,
     required: true    
   },
   expiresAt: {

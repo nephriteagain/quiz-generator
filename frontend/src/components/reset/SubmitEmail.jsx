@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react"
-
+import axios from 'axios'
 
 export default function SubmitEmail({showCodeInput, setShowCodeInput, timer, setTimer}) {
   const [ showResendTimer, setShowResendTimer ] = useState(false)
@@ -7,15 +7,25 @@ export default function SubmitEmail({showCodeInput, setShowCodeInput, timer, set
 
   const resendRef = useRef()
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
 
     const formData = new FormData(e.currentTarget)
     const userData = Object.fromEntries(formData)
-    console.log(userData)
-    setShowResendTimer(true)
-    setShowForm(false)
-    setShowCodeInput(true)
+
+    await axios.post('http://localhost:3000/api/v1/reset', userData, {withCredentials: true})
+      .then((res) => {
+        if (res.status === 201) {
+          setShowResendTimer(true)
+          setShowForm(false)
+          setShowCodeInput(true)
+        }        
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    
   }
 
   function showResetForm() {
@@ -47,18 +57,18 @@ export default function SubmitEmail({showCodeInput, setShowCodeInput, timer, set
   return (
     <>
     { showForm &&
-      <form className="mb-4"
+      <form className="mb-8"
         onSubmit={(e) => handleSubmit(e)}
         >
         <label htmlFor="email"
           className="font-semibold"
           >
-          email
+          your email
         </label>
         <input type="email" name='email' required
           className="block mt-2 mb-4 min-w-[80%] shadow-inner shadow-stone-300 drop-shadow-md rounded-md bg-orange-50 focus:bg-orange-100 px-2 py-1 text-sm"
           />
-        <input type="submit" value='send code' 
+        <input type="submit" value='send code to email' 
           className="bg-green-300 rounded-md px-3 py-1 text-sm shadow-md drop-shadow-md cursor-pointer hover:scale-105 active:scale-95 transition-all duration-100"
           />
       </form>

@@ -66,44 +66,45 @@ router.post('/', async (req, res) => {
       html: `<p>password rest code: ${newCode}</p>`
     }
   
-
+    const hashedPw = hashPassword(newCode)
     const newPassCodeReset = new Password_Reset({
-      code: hashPassword(newCode), 
+      code: hashedPw, 
       codeId: codeId, 
       email: email
     })      
 
     if (!req.cookies?.codeId) {
-      await Promise.all([
-        transporter.sendMail(message),
-        Password_Reset.create(newPassCodeReset)
-      ])
+      await transporter.sendMail(message)
+        .then(async () => {
+          await Password_Reset.create(newPassCodeReset)
+        })
         .then(() => {
           res.cookie('codeId', codeId, {maxAge: 300_000, httpOnly: true})
           res.status(201).send({message: 'reset code sent to email'})
           return
         })
         .catch((err) => {
-          res.status(500).send({err})
+          return res.status(500).send({err})
         })
+
     } else {
       const cookieCodeId = req.cookies.codeId
 
-      await Promise.all([
-        transporter.sendMail(message),
-        Password_Reset.findOneAndUpdate(
-          {codeId: cookieCodeId}, 
-          {code: hashPassword(newCode)}
-        )
-      ])
-      .then((response) => {          
-        console.log(response)
-        res.status(201).send({message: 'reset code sent to email'})
-        return
-      })
-      .catch((err) => {
-        res.status(500).send({err})
-      })
+      await transporter.sendMail(message)
+        .then(async () => {
+          await Password_Reset.findByIdAndUpdate(
+            {codeId: cookieCodeId}, 
+            {code: hashedPw}
+          )
+        })
+        .then((res) => {
+          console.log(res)
+          return res.status(201).send({message: 'reset code sent to email'})
+        })
+        .catch((err) => {
+          return res.status(500).send({err})
+        })
+      
 
     }
     
@@ -126,13 +127,13 @@ router.post('/verify', async (req, res) => {
 
   const { code } = req.body
   const { codeId } = req.cookies
-  
+  console.log(codeId, 'code id')
   try {
 
     const requestTicket = await Password_Reset.findOne({codeId: codeId})
 
     if (!requestTicket) {
-      res.status(400).send('incorrect credentials')
+      res.status(400).send({message: 'incorrect credentials'})
     } else {
       const userEmail = requestTicket.email
 
@@ -144,9 +145,21 @@ router.post('/verify', async (req, res) => {
           })
           const newPassReset = await AuthPassReset.create(newAuthPassReset)
           const { _id, email } = newPassReset
-          res.status(200).send({_id, email})
+          
+          if (!_id || !email) {
+            return res.status(500).send({message: 'db error'})
+          }
+
+          await Password_Reset.deleteOne({codeId: codeId})
+            .then(() => {
+              res.clearCookie('codeId')
+              return res.status(200).send({_id, email})
+            })
+            .catch((err) => {
+              return res.status(500).send({message: 'db delete err'})
+            })
         } catch (error) {
-          res.status(500).send({error})
+          return res.status(500).send({message: 'db error'})
         }
         
       } else {
@@ -155,7 +168,7 @@ router.post('/verify', async (req, res) => {
     }
 
   } catch (error) {
-    res.status(500).send(error)
+    return res.status(500).send({message: 'outer trycatch err'})
   }
   
 
@@ -169,7 +182,7 @@ router.post('/confirm', async (req, res) => {
 
   const id = req.body._id
   const email = req.body.email
-  const newPassword = req.body.newPassword
+  const newPassword = req.body.password
 
   const correctLength = passwordLengthChecker(newPassword)
   const correctChar = passwordCharChecker(newPassword)
@@ -206,7 +219,7 @@ router.post('/confirm', async (req, res) => {
     
 
   } catch (error) {
-    res.status(500).send(error)
+    return res.status(500).send({message: 'outer trycatch error'})
   }
 
 
