@@ -1,27 +1,20 @@
+import { useState } from 'react'
+
+import SubmitCode from '../components/reset/SubmitCode'
+import SubmitEmail from '../components/reset/SubmitEmail'
+
+import { useGlobalContext } from '../context/UserContext'
+
 function Reset() {
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  const [ showCodeInput, setShowCodeInput ] = useState(false)
 
-    const formData = new FormData(e.currentTarget)
-    const userData = Object.fromEntries(formData)
-    console.log(userData)
-  }
+  const { timer, setTimer } = useGlobalContext()
 
   return (
-    <div>
-      <form className="max-w-[400px] min-w-[250px] h-[300px] bg-blue-100 mx-auto mt-20 rounded-xl px-4 py-4 shadow-md drop-shadow-lg"
-        onSubmit={(e) => handleSubmit(e)}
-      >
-        <label htmlFor="email"
-        >
-          enter your email
-        </label>
-        <input type="email" name='email'
-          className="block mt-2"
-        />
-        <input type="submit" value='submit' />
-      </form>
+    <div className="max-w-[400px] min-w-[250px] h-[300px] bg-stone-50 mx-auto mt-20 rounded-xl px-8 py-8 shadow-md drop-shadow-lg">
+      <SubmitEmail showCodeInput={showCodeInput} setShowCodeInput={setShowCodeInput} timer={timer} setTimer={setTimer}/>
+      { showCodeInput && <SubmitCode showCodeInput={showCodeInput} setShowCodeInput={setShowCodeInput} />}
     </div>
   )
 }

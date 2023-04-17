@@ -17,7 +17,9 @@ export const GlobalProvider = ({children}) => {
   const [ showLoadingComponent, setShowLoadingComponent ] = useState(false)
   const [ ascending, setAscending ] = useState('1')
 
-  
+  // password reset timer
+  const [ timer, setTimer ] = useState(60)
+
 
   async function fetchUserData () {
     await axios.get(`http://localhost:3000/api/v1/profile/${user.id}`, {withCredentials: true})
@@ -112,7 +114,9 @@ export const GlobalProvider = ({children}) => {
         setSearchText,
         showLoadingComponent,
         ascending,
-        setAscending
+        setAscending,
+        timer,
+        setTimer
       }}
     >
       {children}

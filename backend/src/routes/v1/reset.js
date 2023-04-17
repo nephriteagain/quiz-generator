@@ -1,5 +1,4 @@
 const { Router } = require('express')
-const mongoose = require('mongoose')
 const nodemailer = require('nodemailer')
 
 

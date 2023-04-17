@@ -1,13 +1,12 @@
 const { Router } = require('express')
 const mongoose = require('mongoose')
-const nodemailer = require('nodemailer')
+
 
 
 const User = require('../../db/Schema/UserSchema')
-const Password_Reset = require('../../db/Schema/PasswordResetSchema')
 
 const { hashPassword, comparePassword } = require('../../../lib/utils/loginHelper')
-const { generateCode, generateRandomString } = require('../../../lib/utils/codeGenerator')
+
 require('dotenv').config()
 
 const router = Router()
