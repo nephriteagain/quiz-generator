@@ -3,14 +3,14 @@ import axios from "axios"
 import {AiOutlineCheck} from 'react-icons/ai'
 import {RxCross2} from 'react-icons/rx'
 import {GrRadialSelected, GrRadial} from 'react-icons/gr'
-
+// import {BiUpvote, BiDownvote} from 'react-icons/bi' tbc
 
 import lowerRoman from "../../lib/data/lowerRoman"
 
 
 // split this code
 function Answer({data, setData}) {
-  const { title, createdBy: author, questions, _id } = data
+  const { title, createdBy: author, questions, _id, votes } = data
   const [ showResult, setShowResult ] = useState(false)
   const [ result, setResult ] = useState({})
   const [ score, setScore ] = useState({score: 0, total: 0})
@@ -119,6 +119,18 @@ function Answer({data, setData}) {
         type="submit" 
         className="bg-green-300 px-2 py-1 rounded-md mb-5 drop-shadow-md hover:bg-green-600 hover:text-white transtion-all duration-100"
       />
+      {/* <div className="absolute top-12 right-6 flex flex-col items-center justify-center">
+        <span className="text-xl mb-1 text-green-700 hover:scale-110 active:scale-95 transition-all duration-100">
+          <BiUpvote />
+        </span>
+        <span className="text-md"
+        >
+          {votes}
+        </span>
+        <span className="text-xl mt-1 text-red-700 hover:scale-110 active:scale-95 transition-all duration-100">
+          <BiDownvote />
+        </span>
+      </div> */}
     </form>
   )
 
@@ -195,6 +207,20 @@ function Answer({data, setData}) {
       >
         Retry Quiz
       </button><br/>
+      
+      {/* <div className="absolute top-12 right-6 flex flex-col items-center justify-center">
+        <span className="text-xl mb-1 text-green-700 hover:scale-110 active:scale-95 transition-all duration-100">
+          <BiUpvote />
+        </span>
+        <span className="text-md"
+        >
+          {votes}
+        </span>
+        <span className="text-xl mt-1 text-red-700 hover:scale-110 active:scale-95 transition-all duration-100">
+          <BiDownvote />
+        </span>
+      </div> */}
+
     </div>
   )
 }
