@@ -24,8 +24,8 @@ router.get('/', async (req, res) => {
       .exec()
 
       const dataToSend = allQuizzes.map((item) => {
-        const {_id, title, createdBy} = item
-        return {_id, title, createdBy}
+        const {_id, title, createdBy, votes = 0} = item
+        return {_id, title, createdBy, votes}
       })
       res.status(200).send(dataToSend)
     } catch (error) {
@@ -86,7 +86,13 @@ router.get('/quiz/:id', async (req, res) => {
     if (mongoose.Types.ObjectId.isValid(id)) {
         try {
             const quiz = await Quiz.findOne({_id: id})
-            res.status(200).send(quiz)
+            // res.status(200).send(quiz)
+            const noAnswers = quiz.questions.map(q => {
+              const {questionText, options, _id} = q
+              return {questionText, options, _id}
+            })
+            const newQuiz = {...quiz, questions: noAnswers}
+            res.status(200).send(newQuiz._doc)
         } catch (error) {
             res.status(500).send(error)
         }

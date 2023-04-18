@@ -35,7 +35,11 @@ const QuizSchema = new mongoose.Schema({
                 required: true
             }
         }
-    ]
+    ],
+    votes: {
+      type: Number,
+      default: 0
+    }
 })
 
 

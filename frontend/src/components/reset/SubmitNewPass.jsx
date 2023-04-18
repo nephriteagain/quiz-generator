@@ -11,9 +11,18 @@ import {
   specialSymbolChecker
 } from '../../lib/helper/signUpFormChecker'
 
+import { 
+  CorrectLength, 
+  CorrectSymbol, 
+  CorrrectChar, 
+  MatchedPassword 
+} from './NewPasswordChecker'
+
+
 export default function SubmitNewPass({_id, email, setShowCodeInput, set_Id, setEmail}) {
   const [ password, setPassword ] = useState('')
   const [ confirmPass, setConfirmPass ] = useState('')
+  const [ passwordValid, setPasswordValid ] = useState(false)
 
   const [ lengthBool, setLengthBool ] = useState(false)
   const [  charBool, setCharBool ] = useState(false)
@@ -29,6 +38,9 @@ export default function SubmitNewPass({_id, email, setShowCodeInput, set_Id, set
 
   async function handleSubmit(e) {
     e.preventDefault()
+    
+    if (!passwordValid) return
+
     console.log({_id, email, password})
     axios.post(
       'http://localhost:3000/api/v1/reset/confirm',
@@ -57,6 +69,9 @@ export default function SubmitNewPass({_id, email, setShowCodeInput, set_Id, set
     passwordCharacterChecker(password, setCharBool)
     specialSymbolChecker(password, setSymbolBool)
     
+    if (lengthBool && charBool && symbolBool && matchBool) {
+      setPasswordValid(true)
+    }
 
   }, [password, confirmPass])
 
@@ -88,7 +103,12 @@ export default function SubmitNewPass({_id, email, setShowCodeInput, set_Id, set
           className="bg-green-300 rounded-md px-3 py-1 text-sm shadow-md drop-shadow-md cursor-pointer hover:scale-105 active:scale-95 transition-all duration-100"
           />
       </form>
-      
+      <div>
+        <MatchedPassword matchBool={matchBool}/>
+        <CorrectLength lengthBool={lengthBool}/>
+        <CorrrectChar charBool={charBool}/>
+        <CorrectSymbol symbolBool={symbolBool}/>
+      </div>
     </div>
   )
 }

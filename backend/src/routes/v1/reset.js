@@ -176,7 +176,7 @@ router.post('/verify', async (req, res) => {
 
 
 router.post('/confirm', async (req, res) => {
-  if (!req.body?._id) {
+  if (!req.body?._id || !req.body?.email || !req.body?.password) {
     return res.status(400).send({message: 'bad request'})
   }
 
@@ -201,10 +201,10 @@ router.post('/confirm', async (req, res) => {
     const authPassChange = await AuthPassReset.findById(id)
 
     if (!authPassChange) {
-      res.status(401).send({message: 'incorrect credentials'})
+      return res.status(401).send({message: 'incorrect credentials'})
     }
     if (email !== authPassChange.email) {
-      res.status(401).send({message: 'email not matched'})
+      return res.status(401).send({message: 'email not matched'})
     }
 
     const emailOfResetPass = authPassChange.email
@@ -216,12 +216,14 @@ router.post('/confirm', async (req, res) => {
         .then(() => {
           return res.status(201).send({message: 'password changed successfully'})
         })
+        .catch((err) => {
+          res.status(500).send({message: 'password change failed'})
+        })
     
 
   } catch (error) {
     return res.status(500).send({message: 'outer trycatch error'})
   }
-
 
 
 })

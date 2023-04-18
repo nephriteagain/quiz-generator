@@ -60,7 +60,7 @@ export default function QuizList({quizList}) {
     { quizList.length > 0 ?
 
       quizList.map((quiz, index) => {
-        const { title, createdBy, _id } = quiz
+        const { title, createdBy, _id, votes } = quiz
         return (
           <div key={index} className='container drop-shadow-xl shadow-xl bg-blue-100 px-2 py-2 rounded-xl hover:-translate-y-2 transition-all duration-100 overflow-hidden max-w-[300px] mx-auto aspect-[1.6/1]'>
             <h3 className='text-xl font-semibold mb-1 whitespace-nowrap quiz-title'>
@@ -75,6 +75,9 @@ export default function QuizList({quizList}) {
             </p>
             </Link>
             <br/>
+            <p className='absolute right-2 bottom-2'>
+              {`${votes > 0 ? votes : ''}`}
+            </p>
           </div>
         )
       }) :

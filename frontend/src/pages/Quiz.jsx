@@ -21,12 +21,12 @@ function Quiz() {
     axios.get(`http://localhost:3000/api/v1/quiz/${captureString}`, {withCredentials: true})
       .then(response => {
         let data = response.data        
-        let questions = data.questions
-        questions = questions.map((item) => {
-          const {questionText, options, _id} = item
-          return {questionText, options}
-        })
-        data.questions = questions
+        // let questions = data.questions
+        // questions = questions.map((item) => {
+        //   const {questionText, options, _id} = item
+        //   return {questionText, options}
+        // })
+        // data.questions = questions
         setData(data)
         setShowAnswerLoadingComponent(false)
       })
