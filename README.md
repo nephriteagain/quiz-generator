@@ -15,3 +15,7 @@ npm install
 
 <!-- vite -->
 npm run dev
+
+
+<!-- NOTE -->
+refactored and splitted into two repo
